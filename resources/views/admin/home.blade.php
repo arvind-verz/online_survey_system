@@ -1,17 +1,32 @@
 @extends('admin.layout.auth')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Dashboard
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i>
+                    Dashboard
+                </a>
+            </li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
 
-                <div class="panel-body">
-                    You are logged in as Admin!
-                </div>
-            </div>
         </div>
-    </div>
+        <!-- /.row (main row) -->
+    </section>
+    <!-- /.content -->
 </div>
+<!-- /.content-wrapper -->
 @endsection

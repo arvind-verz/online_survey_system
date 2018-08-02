@@ -1,89 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <meta content="width=device-width, initial-scale=1" name="viewport">
+                    <!-- CSRF Token -->
+                    <meta content="{{ csrf_token() }}" name="csrf-token">
+                        <title>
+                            {{ config('app.name', 'Survey System') }}
+                        </title>
+                        <!-- Styles -->
+                        <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
+                        <!-- Font Awesome -->
+                        <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
+                        <!-- Ionicons -->
+                        <link href="{{ asset('plugins/Ionicons/css/ionicons.min.css') }}" rel="stylesheet"/>
+                        <!-- Theme style -->
+                        <link href="{{ asset('dist/css/AdminLTE.min.css') }}" rel="stylesheet"/>
+                        <!-- AdminLTE Skins. Choose a skin from the css/skins
+   folder instead of downloading all of them to reduce the load. -->
+                        <link href="{{ asset('dist/css/skins/_all-skins.min.css') }}" rel="stylesheet"/>
+                        <!-- Morris chart -->
+                        <link href="{{ asset('plugins/morris.js/morris.css') }}" rel="stylesheet"/>
+                        <!-- jvectormap -->
+                        <link href="{{ asset('plugins/jvectormap/jquery-jvectormap.css') }}" rel="stylesheet"/>
+                        <!-- Date Picker -->
+                        <link href="{{ asset('plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
+                        <!-- Daterange picker -->
+                        <link href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet"/>
+                        <!-- bootstrap wysihtml5 - text editor -->
+                        <link href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet"/>
+                        <!-- Scripts -->
+                        <script>
+                            window.Laravel = <?php echo json_encode([
+                                'csrfToken' => csrf_token(),
+                            ]); ?>
+                        </script>
+                    </meta>
+                </meta>
+            </meta>
+        </meta>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini fixed">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel Multi Auth Guard') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
-</head>
-<body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/admin') }}">
-                    {{ config('app.name', 'Laravel Multi Auth Guard') }}: Admin
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    <!-- @if (Auth::guest())
-                        <li><a href="{{ url('/admin/login') }}">Login</a></li>
-                        <li><a href="{{ url('/admin/register') }}">Register</a></li>
-                    @else -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/admin/logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ url('/admin/logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    <!-- @endif -->
-                </ul>
-            </div>
+        <div class="wrapper">
+            @include('admin.include.header')
+            @include('admin.include.sidebar')
+            @yield('content')
+            @include('admin.include.footer')
+            @include('admin.include.control-sidebar')
         </div>
-    </nav>
 
-    @yield('content')
-
-    <!-- Scripts -->
-    <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
+        <!-- jQuery 3 -->
+        <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
         </script>
-
-    <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
+        <!-- jQuery UI 1.11.4 -->
+        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}">
         </script>
-</body>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
+        </script>
+        <!-- Morris.js charts -->
+        <script src="{{ asset('plugins/raphael/raphael.min.js') }}">
+        </script>
+        <script src="{{ asset('plugins/morris.js/morris.min.js') }}">
+        </script>
+        <!-- Sparkline -->
+        <script src="{{ asset('plugins/jquery-sparkline/dist/jquery.sparkline.min.js') }}">
+        </script>
+        <!-- jvectormap -->
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}">
+        </script>
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}">
+        </script>
+        <!-- jQuery Knob Chart -->
+        <script src="{{ asset('plugins/jquery-knob/dist/jquery.knob.min.js') }}">
+        </script>
+        <!-- daterangepicker -->
+        <script src="{{ asset('plugins/moment/min/moment.min.js') }}">
+        </script>
+        <script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}">
+        </script>
+        <!-- datepicker -->
+        <script src="{{ asset('plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}">
+        </script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}">
+        </script>
+        <!-- Slimscroll -->
+        <script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}">
+        </script>
+        <!-- FastClick -->
+        <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}">
+        </script>
+        <!-- AdminLTE App -->
+        <script src="{{ asset('dist/js/adminlte.min.js') }}">
+        </script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="{{ asset('dist/js/pages/dashboard.js') }}">
+        </script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="{{ asset('dist/js/demo.js') }}">
+        </script>
+    </body>
 </html>
