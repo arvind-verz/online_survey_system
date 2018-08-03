@@ -17,7 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
   Route::get('/', 'AdminAuth\LoginController@showLoginForm')->name('login');
@@ -32,4 +31,14 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('password.email');
   Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
   Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
+
+
+
+  /* PROFILE */
+  Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
+
+
+  /* CMS */
+  Route::get('/cms/pages', 'AdminAuth\CMS\PagesController@index');
+  Route::get('/cms/pages/create', 'AdminAuth\CMS\PagesController@create');  
 });

@@ -7,6 +7,8 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RegisterController extends Controller
 {
@@ -63,11 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $role = Role::create(['guard_name' => 'admin', 'name' => 'admin']);
+        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create deptadmin']);
+        $role->givePermissionTo($permission);
+
         return Admin::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
     }
 
     /**

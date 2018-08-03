@@ -7,6 +7,8 @@ Route::get('/home', function () {
 
     //dd($users);
 
-    return view('admin.home');
+    return view('admin.home', [
+    	'page_title'	=>	'Dashboard'
+    ]);
 })->name('home');
 

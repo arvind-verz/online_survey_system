@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('dashboard') }}
+        {{ Breadcrumbs::render('profile') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
-                        Dashboard
+                        Profile
                     </div>
                 </div>
             </div>
