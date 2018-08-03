@@ -102,7 +102,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a class="btn btn-default btn-flat" href="#">
+                                <a class="btn btn-default btn-flat" href="{{ url('/admin/profile') }}">
                                     Profile
                                 </a>
                             </div>

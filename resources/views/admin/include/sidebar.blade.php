@@ -4,8 +4,8 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="active treeview">
-                <a href="#">
+            <li class="active">
+                <a href="{{ url('/admin/home') }}">
                     <i class="fa fa-dashboard">
                     </i>
                     <span>

@@ -7,7 +7,7 @@
                     <!-- CSRF Token -->
                     <meta content="{{ csrf_token() }}" name="csrf-token">
                         <title>
-                            {{ config('app.name', 'Survey System') }}
+                            {{ config('app.name', 'Survey System') . ' - ' . $page_title }}
                         </title>
                         <!-- Styles -->
                         <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
@@ -30,11 +30,25 @@
                         <link href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet"/>
                         <!-- bootstrap wysihtml5 - text editor -->
                         <link href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet"/>
+                        <link rel="stylesheet" type="text/css" href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
                         <!-- Scripts -->
                         <script>
                             window.Laravel = <?php echo json_encode([
                                 'csrfToken' => csrf_token(),
                             ]); ?>
+                        </script>
+                        <!-- jQuery 3 -->
+                        <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
+                        </script>
+                        <!-- jQuery UI 1.11.4 -->
+                        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}">
+                        </script>
+                        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                        <script>
+                            $.widget.bridge('uibutton', $.ui.button);
+                        </script>
+                        <!-- Bootstrap 3.3.7 -->
+                        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
                         </script>
                     </meta>
                 </meta>
@@ -51,19 +65,6 @@
             @include('admin.include.control-sidebar')
         </div>
 
-        <!-- jQuery 3 -->
-        <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
-        </script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}">
-        </script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
-            $.widget.bridge('uibutton', $.ui.button);
-        </script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
-        </script>
         <!-- Morris.js charts -->
         <script src="{{ asset('plugins/raphael/raphael.min.js') }}">
         </script>
@@ -97,6 +98,8 @@
         <!-- FastClick -->
         <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}">
         </script>
+        <script type="text/javascript" src="{{ asset('plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('dist/js/adminlte.min.js') }}">
         </script>
@@ -106,5 +109,6 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('dist/js/demo.js') }}">
         </script>
+
     </body>
 </html>

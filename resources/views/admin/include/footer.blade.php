@@ -8,3 +8,8 @@
     All rights
     reserved.
 </footer>
+<script type="text/javascript">
+    $(document).ready(function() {
+    	$('#pages_datatable').DataTable();
+	});
+</script>
