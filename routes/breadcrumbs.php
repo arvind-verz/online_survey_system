@@ -18,3 +18,15 @@ Breadcrumbs::for('create_pages', function ($trail) {
 	$trail->parent('pages');
     $trail->push('Create Pages', url('/admin/cms/pages/create'));
 });
+
+Breadcrumbs::for('logo', function ($trail) {
+	$trail->parent('dashboard');
+	$trail->push('Settings');
+    $trail->push('Logo', url('/admin/cms/settings/logo'));
+});
+
+Breadcrumbs::for('header', function ($trail) {
+	$trail->parent('dashboard');
+	$trail->push('Settings');
+    $trail->push('Header', url('/admin/cms/settings/header'));
+});

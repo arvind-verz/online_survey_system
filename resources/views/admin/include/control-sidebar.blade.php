@@ -15,7 +15,7 @@
         <div class="tab-pane active" id="control-sidebar-home-tab">
             <ul class="control-sidebar-menu">
                 <li>
-                    <a href="{{ url('/admin/cms/pages') }}">
+                    <a href="{{ url('/admin/cms/settings/logo') }}">
                         <i class="menu-icon fa fa-check">
                         </i>
                         <div class="menu-info">
@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/admin/cms/pages') }}">
+                    <a href="{{ url('/admin/cms/settings/header') }}">
                         <i class="menu-icon fa fa-check">
                         </i>
                         <div class="menu-info">
