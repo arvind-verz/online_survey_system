@@ -25,43 +25,44 @@
                         <!-- form start -->
                         Title/Subtitle/Content/Slug/Display/
                         <form role="form">
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        Email address
-                                    </label>
-                                    <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email">
-                                    </input>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">
-                                        Password
-                                    </label>
-                                    <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
-                                    </input>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputFile">
-                                        File input
-                                    </label>
-                                    <input id="exampleInputFile" type="file">
-                                        <p class="help-block">
-                                            Example block-level help text here.
-                                        </p>
-                                    </input>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox">
-                                            Check me out
-                                        </input>
-                                    </label>
-                                </div>
+                            <div class="form-group">
+                                <label>
+                                    Title
+                                </label>
+                                <input class="form-control" placeholder="Enter title" type="text">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Sub Title
+                                </label>
+                                <input class="form-control" placeholder="Enter sub title" type="text">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Slug
+                                </label>
+                                <input class="form-control" placeholder="Enter slug" type="text">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Display
+                                </label>
+                                <select class="form-control" name="display">
+                                    <option value="1">
+                                        Yes
+                                    </option>
+                                    <option value="0">
+                                        No
+                                    </option>
+                                </select>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button class="btn btn-primary" type="submit">
-                                    Submit
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Submit
                                 </button>
                             </div>
                         </form>
