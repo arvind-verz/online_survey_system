@@ -27,10 +27,19 @@
                             <input class="form-control" name="upload_background" placeholder="Upload Background" type="file" value="">
                             </input>
                         </div>
+                        <div class="form-group">
+                            <label>
+                                Content
+                            </label>
+                            <textarea class="summernote-editor" name="content">
+                            </textarea>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                            <i aria-hidden="true" class="fa fa-floppy-o">
+                            </i>
+                            Save
                         </button>
                     </div>
                 </div>
