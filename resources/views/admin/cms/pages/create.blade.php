@@ -40,6 +40,10 @@
                                 </input>
                             </div>
                             <div class="form-group">
+                                <label>Content</label>
+                                <textarea class="summernote-editor" name="content"></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label>
                                     Slug
                                 </label>

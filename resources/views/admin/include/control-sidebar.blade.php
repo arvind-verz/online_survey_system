@@ -38,7 +38,7 @@
                 </li>
                 <li>
                     <a href="{{ url('/admin/cms/pages') }}">
-                        <i class="menu-icon fa fa-file-o">
+                        <i class="menu-icon fa fa-check">
                         </i>
                         <div class="menu-info">
                             <h4 class="control-sidebar-subheading">
