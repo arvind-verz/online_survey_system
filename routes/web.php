@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,31 +17,36 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::group(['prefix' => 'admin'], function () {
-  Route::get('/', 'AdminAuth\LoginController@showLoginForm')->name('login');
-  Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('login');
-  Route::post('/loginpanel', 'AdminAuth\LoginController@login');
-  Route::post('/logout', 'AdminAuth\LoginController@logout')->name('logout');
+    Route::get('/', 'AdminAuth\LoginController@showLoginForm')->name('login');
+    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('login');
+    Route::post('/loginpanel', 'AdminAuth\LoginController@login');
+    Route::post('/logout', 'AdminAuth\LoginController@logout')->name('logout');
 
-  Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('register');
-  Route::post('/register', 'AdminAuth\RegisterController@register');
+    Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('/register', 'AdminAuth\RegisterController@register');
 
-  Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
-  Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('password.email');
-  Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
-  Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
+    Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
+    Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('password.email');
+    Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+    Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
+    /* PROFILE */
+    Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
 
+    /* CMS */
+    Route::get('/cms/pages', 'AdminAuth\CMS\PagesController@index');
+    Route::get('/cms/pages/create', 'AdminAuth\CMS\PagesController@create');
 
-  /* PROFILE */
-  Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
+    Route::get('/cms/settings/logo', 'AdminAuth\CMS\SettingsController@logo');
+    Route::get('/cms/settings/header', 'AdminAuth\CMS\SettingsController@header');
 
+    /* SALES */
+    Route::get('/{department}/users', 'AdminAuth\DepartmentController@users');
+    Route::get('/{department}/users/create', 'AdminAuth\DepartmentController@create_users');
 
-  /* CMS */
-  Route::get('/cms/pages', 'AdminAuth\CMS\PagesController@index');
-  Route::get('/cms/pages/create', 'AdminAuth\CMS\PagesController@create');
+    Route::get('/{department}/customers', 'AdminAuth\DepartmentController@customers');
+    Route::get('/{department}/customers/create', 'AdminAuth\DepartmentController@create_customers');
 
-  Route::get('/cms/settings/logo', 'AdminAuth\CMS\SettingsController@logo');
-  Route::get('/cms/settings/header', 'AdminAuth\CMS\SettingsController@header');  
+    Route::get('/{department}/survey', 'AdminAuth\DepartmentController@survey');
 });

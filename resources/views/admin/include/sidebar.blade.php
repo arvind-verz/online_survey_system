@@ -4,16 +4,17 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="active">
+            <li class="@if(strpos(Route::currentRouteName(), 'admin.home') !== false) active @endif">
                 <a href="{{ url('/admin/home') }}">
                     <i class="fa fa-dashboard">
                     </i>
                     <span>
+                        @php //if(strpos(Route::currentRouteName(), 'admin.home'  )!==false) {echo 'a';}else {echo 'b';} @endphp
                         Dashboard
                     </span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview @if((strpos(Route::currentRouteAction(), 'DepartmentController@users') || strpos(Route::currentRouteAction(), 'DepartmentController@create_users') || strpos(Route::currentRouteAction(), 'DepartmentController@customers') || strpos(Route::currentRouteAction(), 'DepartmentController@create_customers') || strpos(Route::currentRouteAction(), 'DepartmentController@survey') !== false) && (Route::current()->parameters['department']=='sales' || Route::current()->parameters['department']=='operations')) active menu-open @endif">
                 <a href="#">
                     <i aria-hidden="true" class="fa fa-building">
                     </i>
@@ -26,7 +27,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="treeview">
+                    <li class="treeview @if((strpos(Route::currentRouteAction(), 'DepartmentController@users') || strpos(Route::currentRouteAction(), 'DepartmentController@create_users') || strpos(Route::currentRouteAction(), 'DepartmentController@customers') || strpos(Route::currentRouteAction(), 'DepartmentController@create_customers') || strpos(Route::currentRouteAction(), 'DepartmentController@survey') !== false) && (Route::current()->parameters['department']=='sales')) active menu-open @endif">
                         <a href="#">
                             <i class="fa fa-circle-o">
                             </i>
@@ -36,23 +37,23 @@
                                 </i>
                             </span>
                         </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="#">
+                        <ul class="treeview-menu ">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@users') || strpos(Route::currentRouteAction(), 'DepartmentController@create_users') !== false) && (Route::current()->parameters['department']=='sales')) active menu-open @endif">
+                                <a href="{{ url('admin/sales/users') }}">
                                     <i aria-hidden="true" class="fa fa-user-plus">
                                     </i>
                                     Users
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@customers') || strpos(Route::currentRouteAction(), 'DepartmentController@create_customers') !== false) && (Route::current()->parameters['department']=='sales')) active @endif">
+                                <a href="{{ url('admin/sales/customers') }}">
                                     <i aria-hidden="true" class="fa fa-users">
                                     </i>
                                     Customers
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@survey') !== false) && (Route::current()->parameters['department']=='sales')) active @endif">
+                                <a href="{{ url('admin/sales/survey') }}">
                                     <i aria-hidden="true" class="fa fa-flag">
                                     </i>
                                     Survey
@@ -60,7 +61,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview @if((strpos(Route::currentRouteAction(), 'DepartmentController@users') || strpos(Route::currentRouteAction(), 'DepartmentController@create_users') || strpos(Route::currentRouteAction(), 'DepartmentController@customers') || strpos(Route::currentRouteAction(), 'DepartmentController@create_customers') || strpos(Route::currentRouteAction(), 'DepartmentController@survey') !== false) && (Route::current()->parameters['department']=='operations')) active menu-open @endif">
                         <a href="#">
                             <i class="fa fa-circle-o">
                             </i>
@@ -71,22 +72,22 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li>
-                                <a href="#">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@users') || strpos(Route::currentRouteAction(), 'DepartmentController@create_users') !== false) && (Route::current()->parameters['department']=='operations')) active menu-open @endif">
+                                <a href="{{ url('admin/operations/users') }}">
                                     <i aria-hidden="true" class="fa fa-user-plus">
                                     </i>
                                     Users
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@customers') || strpos(Route::currentRouteAction(), 'DepartmentController@create_customers') !== false) && (Route::current()->parameters['department']=='operations')) active @endif">
+                                <a href="{{ url('admin/operations/customers') }}">
                                     <i aria-hidden="true" class="fa fa-users">
                                     </i>
                                     Customers
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li class="@if((strpos(Route::currentRouteAction(), 'DepartmentController@survey') !== false) && (Route::current()->parameters['department']=='operations')) active @endif">
+                                <a href="{{ url('admin/operations/survey') }}">
                                     <i aria-hidden="true" class="fa fa-flag">
                                     </i>
                                     Survey

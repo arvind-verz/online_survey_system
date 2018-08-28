@@ -30,3 +30,9 @@ Breadcrumbs::for('header', function ($trail) {
 	$trail->push('Settings');
     $trail->push('Header', url('/admin/cms/settings/header'));
 });
+
+Breadcrumbs::for('create_sales_users', function ($trail) {
+	$trail->parent('dashboard');
+	$trail->push('Sales');
+    $trail->push('Users', url('/admin/department/sales/index'));
+});

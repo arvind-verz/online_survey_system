@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('pages') }}
+        {{ Breadcrumbs::render('create_sales_users') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -17,29 +17,33 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header text-right">
-                        <a href="{{ url('/admin/cms/pages/create') }}" class="btn btn-info"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create New</a>
+                        <a class="btn btn-info" href="{{ url('/admin/' . $department . '/customers/create') }}">
+                            <i aria-hidden="true" class="fa fa-plus-circle">
+                            </i>
+                            Add Customer
+                        </a>
                     </div>
                     <div class="box-body">
                         <table class="table table-striped table-bordered text-center" id="datatable" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>
-                                        Name
+                                        #
                                     </th>
                                     <th>
-                                        Position
+                                        Sales Name
                                     </th>
                                     <th>
-                                        Office
+                                        Sales Email
                                     </th>
                                     <th>
-                                        Age
+                                        Active
                                     </th>
                                     <th>
-                                        Start date
+                                        Edit
                                     </th>
                                     <th>
-                                        Salary
+                                        Export
                                     </th>
                                 </tr>
                             </thead>
@@ -47,22 +51,24 @@
                                 @for($i=1;$i<20;$i++)
                                 <tr>
                                     <td>
+                                        {{ $i }}
+                                    </td>
+                                    <td>
                                         Tiger Nixon
                                     </td>
                                     <td>
-                                        System Architect
+                                        abc@gmail.com
                                     </td>
                                     <td>
-                                        Edinburgh
+                                        Yes
                                     </td>
                                     <td>
-                                        61
+                                        <i aria-hidden="true" class="fa fa-pencil-square">
+                                        </i>
                                     </td>
                                     <td>
-                                        2011/04/25
-                                    </td>
-                                    <td>
-                                        $320,800
+                                        <i aria-hidden="true" class="fa fa-file-excel-o">
+                                        </i>
                                     </td>
                                 </tr>
                                 @endfor
@@ -70,22 +76,22 @@
                             <tfoot>
                                 <tr>
                                     <th>
-                                        Name
+                                        #
                                     </th>
                                     <th>
-                                        Position
+                                        Sales Name
                                     </th>
                                     <th>
-                                        Office
+                                        Sales Email
                                     </th>
                                     <th>
-                                        Age
+                                        Active
                                     </th>
                                     <th>
-                                        Start date
+                                        Edit
                                     </th>
                                     <th>
-                                        Salary
+                                        Export
                                     </th>
                                 </tr>
                             </tfoot>
@@ -93,8 +99,8 @@
                     </div>
                 </div>
             </div>
+            <!-- /.row (main row) -->
         </div>
-        <!-- /.row (main row) -->
     </section>
     <!-- /.content -->
 </div>

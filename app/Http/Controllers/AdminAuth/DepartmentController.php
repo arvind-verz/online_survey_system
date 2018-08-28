@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\AdminAuth\Department;
+namespace App\Http\Controllers\AdminAuth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SalesController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function users($department)
     {
-        //
+        //dd($department);
+        return view('admin.department.users.index', [
+            'page_title'    =>  'Users',
+            'department'    =>  $department
+        ]);
     }
 
     /**
@@ -22,9 +26,34 @@ class SalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_users($department)
     {
-        //
+        return view('admin.department.users.create', [
+            'page_title'    =>  'Add User',
+            'department'    =>  $department
+        ]);
+    }
+
+    public function customers($department)
+    {
+        //dd($department);
+        return view('admin.department.customers.index', [
+            'page_title'    =>  'Customers',
+            'department'    =>  $department
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_customers($department)
+    {
+        return view('admin.department.customers.create', [
+            'page_title'    =>  'Add Customer',
+            'department'    =>  $department
+        ]);
     }
 
     /**
