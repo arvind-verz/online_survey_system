@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_department', $department, 'customer') }}
+        {{ Breadcrumbs::render('edit_department', $department, 'customer') }}
     </section>
     <!-- Main content -->
     <section class="content">

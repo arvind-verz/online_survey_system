@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 
 class DepartmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,6 @@ class DepartmentController extends Controller
      */
     public function users($department)
     {
-        //dd($department);
         return view('admin.department.users.index', [
             'page_title'    =>  'Users',
             'department'    =>  $department
@@ -34,9 +39,16 @@ class DepartmentController extends Controller
         ]);
     }
 
+    public function edit_users($department)
+    {
+        return view('admin.department.users.edit', [
+            'page_title'    =>  'Edit User',
+            'department'    =>  $department
+        ]);
+    }
+
     public function customers($department)
     {
-        //dd($department);
         return view('admin.department.customers.index', [
             'page_title'    =>  'Customers',
             'department'    =>  $department
@@ -52,6 +64,30 @@ class DepartmentController extends Controller
     {
         return view('admin.department.customers.create', [
             'page_title'    =>  'Add Customer',
+            'department'    =>  $department
+        ]);
+    }
+
+    public function edit_customers($department)
+    {
+        return view('admin.department.customers.edit', [
+            'page_title'    =>  'Edit Customer',
+            'department'    =>  $department
+        ]);
+    }
+
+    public function survey($department)
+    {
+        return view('admin.department.survey.index', [
+            'page_title'    =>  'Survey',
+            'department'    =>  $department
+        ]);
+    }
+
+    public function view_survey($department)
+    {
+        return view('admin.department.survey.view', [
+            'page_title'    =>  'View Survey',
             'department'    =>  $department
         ]);
     }

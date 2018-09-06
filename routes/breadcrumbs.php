@@ -31,8 +31,26 @@ Breadcrumbs::for('header', function ($trail) {
     $trail->push('Header', url('/admin/cms/settings/header'));
 });
 
-Breadcrumbs::for('create_sales_users', function ($trail) {
+Breadcrumbs::for('department', function ($trail, $department, $type) {
 	$trail->parent('dashboard');
-	$trail->push('Sales');
-    $trail->push('Users', url('/admin/department/sales/index'));
+	$trail->push(ucfirst($department), url('admin/' . $department . '/'. $type));
+    $trail->push(ucfirst($type), url('/admin/department/sales/index'));
+});
+
+Breadcrumbs::for('create_department', function ($trail, $department, $type) {
+	$trail->parent('dashboard');
+	$trail->push(ucfirst($department), url('admin/' . $department . '/'. $type . 's'));
+    $trail->push('Add '. ucfirst($type), url('/admin/department/' . $type . '/create'));
+});
+
+Breadcrumbs::for('edit_department', function ($trail, $department, $type) {
+	$trail->parent('dashboard');
+	$trail->push(ucfirst($department), url('admin/' . $department . '/'. $type . 's'));
+    $trail->push('Edit '. ucfirst($type), url('/admin/department/' . $type . 's' . '/edit'));
+});
+
+Breadcrumbs::for('view_department', function ($trail, $department, $type) {
+	$trail->parent('dashboard');
+	$trail->push(ucfirst($department), url('admin/' . $department . '/'. $type));
+    $trail->push('Edit '. ucfirst($type), url('/admin/department/' . $type . '/view'));
 });

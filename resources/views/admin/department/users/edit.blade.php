@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_pages') }}
+        {{ Breadcrumbs::render('edit_department', $department, 'user') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -17,7 +17,9 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header text-right">
-                        <a class="btn btn-warning" href="{{ url('/admin/sales') }}">
+                        <a class="btn btn-warning" href="{{ url('/admin/' . $department . '/users') }}">
+                            <i aria-hidden="true" class="fa fa-long-arrow-left">
+                            </i>
                             Back
                         </a>
                     </div>

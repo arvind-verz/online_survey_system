@@ -44,9 +44,13 @@ Route::group(['prefix' => 'admin'], function () {
     /* SALES */
     Route::get('/{department}/users', 'AdminAuth\DepartmentController@users');
     Route::get('/{department}/users/create', 'AdminAuth\DepartmentController@create_users');
+    Route::get('/{department}/users/edit', 'AdminAuth\DepartmentController@edit_users');
+    Route::post('/{department}/users/store', 'AdminAuth\UserController@store_users');
 
     Route::get('/{department}/customers', 'AdminAuth\DepartmentController@customers');
     Route::get('/{department}/customers/create', 'AdminAuth\DepartmentController@create_customers');
+    Route::get('/{department}/customers/edit', 'AdminAuth\DepartmentController@edit_customers');
 
     Route::get('/{department}/survey', 'AdminAuth\DepartmentController@survey');
+    Route::get('/{department}/survey/view', 'AdminAuth\DepartmentController@view_survey');
 });

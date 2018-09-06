@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_sales_users') }}
+        {{ Breadcrumbs::render('department', $department, 'users') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -31,10 +31,10 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }} Name
                                     </th>
                                     <th>
-                                        Sales Email
+                                        {{ ucfirst($department) }} Email
                                     </th>
                                     <th>
                                         Active
@@ -57,14 +57,16 @@
                                         Tiger Nixon
                                     </td>
                                     <td>
-                                        abc@gmail.com
+                                        arvind.verz@gmail.com
                                     </td>
                                     <td>
                                         Yes
                                     </td>
                                     <td>
-                                        <i aria-hidden="true" class="fa fa-pencil-square">
-                                        </i>
+                                        <a href="{{ url('/admin/' . $department . '/users/edit') }}">
+                                            <i aria-hidden="true" class="fa fa-pencil-square">
+                                            </i>
+                                        </a>
                                     </td>
                                     <td>
                                         <i aria-hidden="true" class="fa fa-file-excel-o">
@@ -79,10 +81,10 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }} Name
                                     </th>
                                     <th>
-                                        Sales Email
+                                        {{ ucfirst($department) }} Email
                                     </th>
                                     <th>
                                         Active
