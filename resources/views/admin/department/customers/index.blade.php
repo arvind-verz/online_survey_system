@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_sales_users') }}
+        {{ Breadcrumbs::render('department', $department, 'customers') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -31,19 +31,22 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }}
                                     </th>
                                     <th>
-                                        Sales Email
+                                        Company Name
                                     </th>
                                     <th>
-                                        Active
+                                        Customer Name
+                                    </th>
+                                    <th>
+                                        Customer Email
+                                    </th>
+                                    <th>
+                                        Status
                                     </th>
                                     <th>
                                         Edit
-                                    </th>
-                                    <th>
-                                        Export
                                     </th>
                                 </tr>
                             </thead>
@@ -57,18 +60,22 @@
                                         Tiger Nixon
                                     </td>
                                     <td>
-                                        abc@gmail.com
+                                        Verz Design
                                     </td>
                                     <td>
-                                        Yes
+                                        Arvind
                                     </td>
                                     <td>
-                                        <i aria-hidden="true" class="fa fa-pencil-square">
-                                        </i>
+                                        arvind.verz@gmail.com
                                     </td>
                                     <td>
-                                        <i aria-hidden="true" class="fa fa-file-excel-o">
-                                        </i>
+                                        Sent
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('/admin/' . $department . '/customers/edit') }}">
+                                            <i aria-hidden="true" class="fa fa-pencil-square">
+                                            </i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endfor
@@ -79,19 +86,22 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }}
                                     </th>
                                     <th>
-                                        Sales Email
+                                        Company Name
                                     </th>
                                     <th>
-                                        Active
+                                        Customer Name
+                                    </th>
+                                    <th>
+                                        Customer Email
+                                    </th>
+                                    <th>
+                                        Status
                                     </th>
                                     <th>
                                         Edit
-                                    </th>
-                                    <th>
-                                        Export
                                     </th>
                                 </tr>
                             </tfoot>

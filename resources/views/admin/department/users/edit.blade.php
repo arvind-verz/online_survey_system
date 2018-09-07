@@ -6,9 +6,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{ $page_title }}
+            {{ $page_title . ' #' . $user->unique_id }}
         </h1>
-        {{ Breadcrumbs::render('create_department', $department, 'customer') }}
+        {{ Breadcrumbs::render('edit_department', $department, 'user') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -17,48 +17,56 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header text-right">
-                        <a class="btn btn-warning" href="{{ url('/admin/' . $department . '/customers') }}">
+                        <a class="btn btn-warning" href="{{ url('/admin/' . $department . '/users') }}">
                             <i aria-hidden="true" class="fa fa-long-arrow-left">
                             </i>
                             Back
                         </a>
                     </div>
                     <div class="box-body">
+                        @include('admin.include.status')
                         <!-- form start -->
-                        <form role="form">
+                        {!! Form::open(['url' => url('/admin/' . $department . '/users/update', ['id'  =>  $user->unique_id]), 'id'    =>  'users', 'method'   =>  'POST']) !!}
                             <div class="form-group">
                                 <label>
-                                    Company Name
+                                    Name
                                 </label>
-                                <input class="form-control" placeholder="Enter company name" type="text">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    First Name
-                                </label>
-                                <input class="form-control" placeholder="Enter first name" type="text">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Last Name
-                                </label>
-                                <input class="form-control" placeholder="Enter last name" type="text">
+                                <input class="form-control" name="name" placeholder="Enter name" type="text" value="{{ $user->name }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Email
                                 </label>
-                                <input class="form-control" placeholder="Enter email" type="email">
+                                <input class="form-control" name="email" placeholder="Enter email" type="email" value="{{ $user->email }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
-                                    Appointment Date
+                                    Password
                                 </label>
-                                <input class="form-control datepicker" placeholder="Enter date" type="text" value="{{ date('Y-m-d') }}">
+                                <input class="form-control" name="password" placeholder="Enter password" type="password">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Confirm Password
+                                </label>
+                                <input class="form-control" name="confirm_password" placeholder="Confirm password" type="password">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Is Admin?
+                                </label>
+                                <input name="is_admin" type="checkbox" value="1" @if($user->is_admin==1) checked @endif>
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Active
+                                </label>
+                                <input name="is_active" type="checkbox" value="1" @if($user->is_active==1) checked @endif>
                                 </input>
                             </div>
                             <!-- /.box-body -->
@@ -69,7 +77,7 @@
                                     Submit
                                 </button>
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

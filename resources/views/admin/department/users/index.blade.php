@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_sales_users') }}
+        {{ Breadcrumbs::render('department', $department, 'users') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -31,10 +31,10 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }} Name
                                     </th>
                                     <th>
-                                        Sales Email
+                                        {{ ucfirst($department) }} Email
                                     </th>
                                     <th>
                                         Active
@@ -48,30 +48,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i=1;$i<20;$i++)
+                                @php $i = 1; @endphp
+                                @if($users->count())
+                                @foreach($users as $user)
                                 <tr>
                                     <td>
                                         {{ $i }}
                                     </td>
                                     <td>
-                                        Tiger Nixon
+                                        {{ $user->name }}
                                     </td>
                                     <td>
-                                        abc@gmail.com
+                                        {{ $user->email }}
                                     </td>
                                     <td>
-                                        Yes
+                                        @if($user->is_active==1) Yes @else No @endif
                                     </td>
                                     <td>
-                                        <i aria-hidden="true" class="fa fa-pencil-square">
-                                        </i>
+                                        <a href="{{ url('/admin/' . $department . '/users/edit/' . $user->unique_id) }}">
+                                            <i aria-hidden="true" class="fa fa-pencil-square">
+                                            </i>
+                                        </a>
                                     </td>
                                     <td>
                                         <i aria-hidden="true" class="fa fa-file-excel-o">
                                         </i>
                                     </td>
                                 </tr>
-                                @endfor
+                                @endforeach
+                                @php $i++; @endphp
+                                @endif
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -79,10 +85,10 @@
                                         #
                                     </th>
                                     <th>
-                                        Sales Name
+                                        {{ ucfirst($department) }} Name
                                     </th>
                                     <th>
-                                        Sales Email
+                                        {{ ucfirst($department) }} Email
                                     </th>
                                     <th>
                                         Active

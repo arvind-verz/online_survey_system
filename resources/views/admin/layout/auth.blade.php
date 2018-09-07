@@ -31,9 +31,8 @@
                         <!-- bootstrap wysihtml5 - text editor -->
                         <link href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet"/>
                         <link href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-                        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet" type="text/css">
-
-                            <!-- Scripts -->
+                            <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet" type="text/css">
+                                <!-- Scripts -->
                                 <script>
                                     window.Laravel = <?php echo json_encode([
                                         'csrfToken' => csrf_token(),

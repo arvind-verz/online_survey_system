@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('create_pages') }}
+        {{ Breadcrumbs::render('edit_department', $department, 'customer') }}
     </section>
     <!-- Main content -->
     <section class="content">
@@ -17,7 +17,9 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header text-right">
-                        <a class="btn btn-warning" href="{{ url('/admin/sales') }}">
+                        <a class="btn btn-warning" href="{{ url('/admin/' . $department . '/customers') }}">
+                            <i aria-hidden="true" class="fa fa-long-arrow-left">
+                            </i>
                             Back
                         </a>
                     </div>
@@ -26,9 +28,23 @@
                         <form role="form">
                             <div class="form-group">
                                 <label>
-                                    Name
+                                    Company Name
                                 </label>
-                                <input class="form-control" placeholder="Enter name" type="text">
+                                <input class="form-control" placeholder="Enter company name" type="text">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    First Name
+                                </label>
+                                <input class="form-control" placeholder="Enter first name" type="text">
+                                </input>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Last Name
+                                </label>
+                                <input class="form-control" placeholder="Enter last name" type="text">
                                 </input>
                             </div>
                             <div class="form-group">
@@ -40,30 +56,9 @@
                             </div>
                             <div class="form-group">
                                 <label>
-                                    Password
+                                    Appointment Date
                                 </label>
-                                <input class="form-control" placeholder="Enter password" type="password">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Confirm Password
-                                </label>
-                                <input class="form-control" placeholder="Confirm password" type="password">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Is Admin?
-                                </label>
-                                <input name="is_admin" type="checkbox">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Active
-                                </label>
-                                <input name="is_admin" type="checkbox">
+                                <input class="form-control datepicker" placeholder="Enter date" type="text" value="{{ date('Y-m-d') }}">
                                 </input>
                             </div>
                             <!-- /.box-body -->
