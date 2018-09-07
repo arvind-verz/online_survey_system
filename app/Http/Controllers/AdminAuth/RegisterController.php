@@ -69,7 +69,12 @@ class RegisterController extends Controller
         $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create deptadmin']);
         $role->givePermissionTo($permission);
 
+        $role       = Role::create(['guard_name' => 'admin', 'name' => 'dept_admin']);
+        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create staff']);
+        $role->givePermissionTo($permission);
+        
         return Admin::create([
+            'unique_id' => uniqid(),
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

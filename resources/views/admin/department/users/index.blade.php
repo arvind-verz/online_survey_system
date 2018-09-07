@@ -48,22 +48,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i=1;$i<20;$i++)
+                                @php $i = 1; @endphp
+                                @if($users->count())
+                                @foreach($users as $user)
                                 <tr>
                                     <td>
                                         {{ $i }}
                                     </td>
                                     <td>
-                                        Tiger Nixon
+                                        {{ $user->name }}
                                     </td>
                                     <td>
-                                        arvind.verz@gmail.com
+                                        {{ $user->email }}
                                     </td>
                                     <td>
-                                        Yes
+                                        @if($user->is_active==1) Yes @else No @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/users/edit') }}">
+                                        <a href="{{ url('/admin/' . $department . '/users/edit/' . $user->unique_id) }}">
                                             <i aria-hidden="true" class="fa fa-pencil-square">
                                             </i>
                                         </a>
@@ -73,7 +75,9 @@
                                         </i>
                                     </td>
                                 </tr>
-                                @endfor
+                                @endforeach
+                                @php $i++; @endphp
+                                @endif
                             </tbody>
                             <tfoot>
                                 <tr>

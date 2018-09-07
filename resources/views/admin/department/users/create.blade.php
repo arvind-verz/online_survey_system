@@ -24,8 +24,7 @@
                         </a>
                     </div>
                     <div class="box-body">
-                        @include('admin.include.header')
-                        
+                        @include('admin.include.status')
                         <!-- form start -->
                         {!! Form::open(['url' => url('/admin/' . $department . '/users/store'), 'id'    =>  'users', 'method'   =>  'POST']) !!}
                         <div class="form-group">
@@ -60,14 +59,14 @@
                             <label>
                                 Is Admin?
                             </label>
-                            <input @endif="" @if(old('is_admin')="1)" checked="" name="is_admin" type="checkbox" value="1">
+                            <input name="is_admin" type="checkbox" value="1" @if(old('is_admin')==1) checked @endif>
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Active
                             </label>
-                            <input @endif="" @if(old('is_active')="1)" checked="" name="is_active" type="checkbox" value="1">
+                            <input name="is_active" type="checkbox" value="1" @if(old('is_active')==1) checked @endif>
                             </input>
                         </div>
                         <!-- /.box-body -->
