@@ -24,41 +24,42 @@
                         </a>
                     </div>
                     <div class="box-body">
+                        @include('admin.include.status')
                         <!-- form start -->
-                        <form role="form">
+                        {!! Form::open(['url' => url('/admin/' . $department . '/customers/store'), 'id'    =>  'customers', 'method'   =>  'POST']) !!}
                             <div class="form-group">
                                 <label>
                                     Company Name
                                 </label>
-                                <input class="form-control" placeholder="Enter company name" type="text">
+                                <input class="form-control" name="company_name" placeholder="Enter company name" type="text" value="{{ old('company_name') }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
                                     First Name
                                 </label>
-                                <input class="form-control" placeholder="Enter first name" type="text">
+                                <input class="form-control" name="firstname" placeholder="Enter first name" type="text" value="{{ old('firstname') }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Last Name
                                 </label>
-                                <input class="form-control" placeholder="Enter last name" type="text">
+                                <input class="form-control" name="lastname" placeholder="Enter last name" type="text" value="{{ old('lastname') }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Email
                                 </label>
-                                <input class="form-control" placeholder="Enter email" type="email">
+                                <input class="form-control" name="email" placeholder="Enter email" type="email" value="{{ old('email') }}">
                                 </input>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Appointment Date
                                 </label>
-                                <input class="form-control datepicker" placeholder="Enter date" type="text" value="{{ date('Y-m-d') }}">
+                                <input class="form-control datepicker" name="appointment_date" placeholder="Enter date" type="text" value="{{ date('Y-m-d') }}">
                                 </input>
                             </div>
                             <!-- /.box-body -->
@@ -69,7 +70,7 @@
                                     Submit
                                 </button>
                             </div>
-                        </form>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

@@ -74,7 +74,7 @@ class RegisterController extends Controller
         $role->givePermissionTo($permission);
         
         return Admin::create([
-            'unique_id' => uniqid(),
+            'unique_id' => 'verz_' . uniqid(),
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

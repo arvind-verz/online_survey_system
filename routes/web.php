@@ -47,11 +47,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/{department}/users/store', 'AdminAuth\DepartmentController@store_users');
     Route::get('/{department}/users/edit/{id}', 'AdminAuth\DepartmentController@edit_users');
     Route::post('/{department}/users/update/{id}', 'AdminAuth\DepartmentController@update_users');
-    
 
     Route::get('/{department}/customers', 'AdminAuth\DepartmentController@customers');
     Route::get('/{department}/customers/create', 'AdminAuth\DepartmentController@create_customers');
-    Route::get('/{department}/customers/edit', 'AdminAuth\DepartmentController@edit_customers');
+    Route::post('/{department}/customers/store', 'AdminAuth\DepartmentController@store_customers');
+    Route::get('/{department}/customers/edit/{id}', 'AdminAuth\DepartmentController@edit_customers');
+    Route::post('/{department}/customers/update/{id}', 'AdminAuth\DepartmentController@update_customers');
 
     Route::get('/{department}/survey', 'AdminAuth\DepartmentController@survey');
     Route::get('/{department}/survey/view', 'AdminAuth\DepartmentController@view_survey');

@@ -51,34 +51,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i=1;$i<20;$i++)
+                                @php $i = 1; @endphp
+                                @if($customers->count())
+                                @foreach($customers as $customer)
                                 <tr>
                                     <td>
                                         {{ $i }}
                                     </td>
                                     <td>
-                                        Tiger Nixon
+                                        {{ $customer->company_name }}
                                     </td>
                                     <td>
-                                        Verz Design
+                                        {{ $customer->firstname }}
                                     </td>
                                     <td>
-                                        Arvind
+                                        {{ $customer->lastname }}
                                     </td>
                                     <td>
-                                        arvind.verz@gmail.com
+                                        {{ $customer->email }}
                                     </td>
                                     <td>
                                         Sent
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/customers/edit') }}">
+                                        <a href="{{ url('/admin/' . $department . '/customers/edit/' . $customer->unique_id) }}">
                                             <i aria-hidden="true" class="fa fa-pencil-square">
                                             </i>
                                         </a>
                                     </td>
                                 </tr>
-                                @endfor
+                                @endforeach
+                                @php $i++; @endphp
+                                @endif
                             </tbody>
                             <tfoot>
                                 <tr>
