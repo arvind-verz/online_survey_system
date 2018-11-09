@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Admin;
-use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Validator;
 
 class RegisterController extends Controller
 {
@@ -21,7 +21,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -51,8 +51,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:admins',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:admins',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -65,19 +65,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $role = Role::create(['guard_name' => 'admin', 'name' => 'admin']);
+        $role       = Role::create(['guard_name' => 'admin', 'name' => 'admin']);
         $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create deptadmin']);
         $role->givePermissionTo($permission);
 
         $role       = Role::create(['guard_name' => 'admin', 'name' => 'dept_admin']);
         $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create staff']);
         $role->givePermissionTo($permission);
-        
+
         return Admin::create([
-            'unique_id' => uniqid(),
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'unique_id' => 'verz_' . uniqid(),
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'is_admin'  => 0,
         ]);
 
     }

@@ -24,6 +24,8 @@
                         <link href="{{ asset('plugins/morris.js/morris.css') }}" rel="stylesheet"/>
                         <!-- jvectormap -->
                         <link href="{{ asset('plugins/jvectormap/jquery-jvectormap.css') }}" rel="stylesheet"/>
+
+                        <link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet"/>
                         <!-- Date Picker -->
                         <link href="{{ asset('plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
                         <!-- Daterange picker -->
@@ -103,6 +105,8 @@
         </script>
         <script src="{{ asset('plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}" type="text/javascript">
         </script>
+        <script src="{{ asset('plugins/iCheck/iCheck.min.js') }}" type="text/javascript">
+        </script>
         <!-- AdminLTE App -->
         <script src="{{ asset('dist/js/adminlte.min.js') }}">
         </script>
@@ -159,6 +163,14 @@
                     },
                     height: 150,
                 });               
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('input[type="checkbox"].flat-green, input[type="radio"].flat-green').iCheck({
+                  checkboxClass: 'icheckbox_flat-green',
+                  radioClass   : 'iradio_flat-green'
+                });
             });
         </script>
     </body>

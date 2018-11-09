@@ -52,5 +52,5 @@ Breadcrumbs::for('edit_department', function ($trail, $department, $type) {
 Breadcrumbs::for('view_department', function ($trail, $department, $type) {
 	$trail->parent('dashboard');
 	$trail->push(ucfirst($department), url('admin/' . $department . '/'. $type));
-    $trail->push('Edit '. ucfirst($type), url('/admin/department/' . $type . '/view'));
+    $trail->push('View '. ucfirst($type), url('/admin/department/' . $type . '/view'));
 });

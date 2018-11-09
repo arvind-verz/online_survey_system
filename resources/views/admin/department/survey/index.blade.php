@@ -8,7 +8,7 @@
         <h1>
             {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('view_department', $department, 'survey') }}
+        {{ Breadcrumbs::render('department', $department, 'survey') }}
     </section>
     <!-- Main content -->
     <section class="content">

@@ -59,14 +59,14 @@
                             <label>
                                 Is Admin?
                             </label>
-                            <input name="is_admin" type="checkbox" value="1" @if(old('is_admin')==1) checked @endif>
+                            <input class="flat-green" name="is_admin" type="checkbox" value="1" @if(old('is_admin')==1) checked @endif>
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
                                 Active
                             </label>
-                            <input name="is_active" type="checkbox" value="1" @if(old('is_active')==1) checked @endif>
+                            <input class="flat-green" name="is_active" type="checkbox" value="1" @if(old('is_active')==1) checked @endif>
                             </input>
                         </div>
                         <!-- /.box-body -->
