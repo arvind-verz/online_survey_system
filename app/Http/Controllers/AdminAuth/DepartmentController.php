@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Admin;
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
@@ -25,7 +26,7 @@ class DepartmentController extends Controller
      */
     public function users($department)
     {
-        $users = User::where('department', $department)->get();
+        $users = Admin::where('department', $department)->get();
         return view('admin.department.users.index', [
             'page_title' => 'Users',
             'department' => $department,
@@ -61,13 +62,13 @@ class DepartmentController extends Controller
                 ->withInput();
         }
 
-        $user             = new User;
+        $user             = new Admin;
         $user->unique_id  = $this->unique_id;
         $user->department = $department;
         $user->name       = $request->name;
         $user->email      = $request->email;
         $user->password   = bcrypt($request->password);
-        $user->is_admin   = isset($request->is_admin) ? $request->is_admin : 0;
+        $user->is_admin   = isset($request->is_admin) ? $request->is_admin : 2;
         $user->is_active  = isset($request->is_active) ? $request->is_active : 0;
         $user->added_by   = Auth::user()->id;
         $user->save();
