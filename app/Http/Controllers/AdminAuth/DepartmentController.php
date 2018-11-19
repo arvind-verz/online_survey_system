@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\AdminAuth;
 
+use App\Admin;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Admin;
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
@@ -42,7 +42,7 @@ class DepartmentController extends Controller
     public function create_users($department)
     {
         return view('admin.department.users.create', [
-            'page_title' => 'Add User',
+            'page_title' => 'Create',
             'department' => $department,
         ]);
     }
@@ -80,7 +80,7 @@ class DepartmentController extends Controller
     {
         $user = User::where('unique_id', $id)->first();
         return view('admin.department.users.edit', [
-            'page_title' => 'Edit User',
+            'page_title' => 'Edit',
             'department' => $department,
             'user'       => $user,
         ]);
@@ -138,7 +138,7 @@ class DepartmentController extends Controller
     public function create_customers($department)
     {
         return view('admin.department.customers.create', [
-            'page_title' => 'Add Customer',
+            'page_title' => 'Create',
             'department' => $department,
         ]);
     }
@@ -150,28 +150,28 @@ class DepartmentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $customer                   = new Customer;
         $customer->unique_id        = $this->unique_id;
+        $customer->department       = $department;
         $customer->company_name     = $request->company_name;
         $customer->firstname        = $request->firstname;
         $customer->lastname         = $request->lastname;
         $customer->email            = $request->email;
         $customer->appointment_date = $request->appointment_date;
+        $customer->added_by         = Auth::id();
         $customer->save();
 
-        return back()->with('success', 'Customer' . __('constant.SUCCESS'));
+        return back()->with('success', config('constant.customer') . __('messages.created'));
     }
 
     public function edit_customers($department, $id)
     {
         $customer = Customer::where('unique_id', $id)->first();
         return view('admin.department.customers.edit', [
-            'page_title' => 'Edit Customer',
+            'page_title' => 'Edit',
             'department' => $department,
             'customer'   => $customer,
         ]);
@@ -181,7 +181,7 @@ class DepartmentController extends Controller
     {
         $customer  = Customer::where('unique_id', $id)->first();
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email,' . $customer->id,
+            'email' => 'required|email|unique:customers,email,' . $customer->id,
         ]);
 
         if ($validator->fails()) {
@@ -197,7 +197,7 @@ class DepartmentController extends Controller
         $customer->appointment_date = $request->appointment_date;
         $customer->save();
 
-        return back()->with('success', 'Customer' . __('constant.UPDATED'));
+        return back()->with('success', config('constant.customer') . __('messages.updated'));
     }
 
     public function survey($department)
@@ -211,7 +211,7 @@ class DepartmentController extends Controller
     public function view_survey($department)
     {
         return view('admin.department.survey.view', [
-            'page_title' => 'View Survey',
+            'page_title' => 'View',
             'department' => $department,
         ]);
     }

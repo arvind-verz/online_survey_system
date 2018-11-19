@@ -16,8 +16,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header text-right">
-                        <a href="{{ url('/admin/cms/pages/create') }}" class="btn btn-info"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create New</a>
+                    <div class="box-header">
+                        <a href="{{ url('/admin/cms/pages/create') }}" class="btn btn-info"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create</a>
                     </div>
                     <div class="box-body">
                         <table class="table table-striped table-bordered text-center" id="datatable" style="width:100%">
@@ -27,68 +27,48 @@
                                         Name
                                     </th>
                                     <th>
-                                        Position
+                                        Display
                                     </th>
                                     <th>
-                                        Office
+                                        Order
                                     </th>
                                     <th>
-                                        Age
+                                        Created At
                                     </th>
                                     <th>
-                                        Start date
+                                        Updated At
                                     </th>
                                     <th>
-                                        Salary
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i=1;$i<20;$i++)
+                                @if($pages->count())
+                                @foreach($pages as $page)
                                 <tr>
                                     <td>
-                                        Tiger Nixon
+                                        {{ $page->title }}
                                     </td>
                                     <td>
-                                        System Architect
+                                        {{ ($page->display==1) ? 'Yes' : 'No' }}
                                     </td>
                                     <td>
-                                        Edinburgh
+                                        {{ $page->ordering }}
                                     </td>
                                     <td>
-                                        61
+                                        {{ $page->created_at }}
                                     </td>
                                     <td>
-                                        2011/04/25
+                                        {{ $page->updated_at }}
                                     </td>
                                     <td>
-                                        $320,800
+                                        <a href="{{ url('admin/cms/pages/edit/' . $page->id) }}" class="btn btn-warning">Edit</a>
                                     </td>
                                 </tr>
-                                @endfor
+                                @endforeach
+                                @endif
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Position
-                                    </th>
-                                    <th>
-                                        Office
-                                    </th>
-                                    <th>
-                                        Age
-                                    </th>
-                                    <th>
-                                        Start date
-                                    </th>
-                                    <th>
-                                        Salary
-                                    </th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

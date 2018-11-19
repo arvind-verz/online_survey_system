@@ -16,11 +16,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header text-right">
+                    <div class="box-header">
                         <a class="btn btn-info" href="{{ url('/admin/' . $department . '/customers/create') }}">
                             <i aria-hidden="true" class="fa fa-plus-circle">
                             </i>
-                            Add Customer
+                            Create
                         </a>
                     </div>
                     <div class="box-body">
@@ -84,31 +84,6 @@
                                 @php $i++; @endphp
                                 @endif
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        {{ ucfirst($department) }}
-                                    </th>
-                                    <th>
-                                        Company Name
-                                    </th>
-                                    <th>
-                                        Customer Name
-                                    </th>
-                                    <th>
-                                        Customer Email
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th>
-                                        Edit
-                                    </th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

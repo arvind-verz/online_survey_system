@@ -1,32 +1,24 @@
 @extends('admin.layout.auth')
-
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{ $page_title }}
+        {{ $page_title }}
         </h1>
         {{ Breadcrumbs::render('create_department', $department, 'user') }}
     </section>
+    @include('admin.include.status')
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header text-right">
-                        <a class="btn btn-warning" href="{{ url('/admin/' . $department . '/users') }}">
-                            <i aria-hidden="true" class="fa fa-long-arrow-left">
-                            </i>
-                            Back
-                        </a>
-                    </div>
+                    {!! Form::open(['url' => url('/admin/' . $department . '/users/store'), 'id'    =>  'users', 'method'   =>  'POST']) !!}
                     <div class="box-body">
-                        @include('admin.include.status')
                         <!-- form start -->
-                        {!! Form::open(['url' => url('/admin/' . $department . '/users/store'), 'id'    =>  'users', 'method'   =>  'POST']) !!}
                         <div class="form-group">
                             <label>
                                 Name
@@ -70,15 +62,17 @@
                             </input>
                         </div>
                         <!-- /.box-body -->
-                        <div class="box-footer">
-                            <button class="btn btn-primary" type="submit">
-                                <i aria-hidden="true" class="fa fa-floppy-o">
-                                </i>
-                                Submit
-                            </button>
-                        </div>
-                        {!! Form::close() !!}
                     </div>
+                    <div class="box-footer">
+                        <a class="btn btn-default" href="{{ url('/admin/' . $department . '/users') }}">
+                            Cancel
+                        </a>
+                        <button class="btn btn-primary pull-right" type="submit">
+                            <i aria-hidden="true" class="fa fa-floppy-o"></i>
+                        Submit
+                        </button>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

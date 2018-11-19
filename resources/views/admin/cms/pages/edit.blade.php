@@ -5,9 +5,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        {{ $page_title . ' #' . $user->unique_id }}
+        {{ $page_title }}
         </h1>
-        {{ Breadcrumbs::render('edit_department', $department, 'user') }}
+        {{ Breadcrumbs::render('create_pages') }}
     </section>
     @include('admin.include.status')
     <!-- Main content -->
@@ -16,62 +16,59 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    {!! Form::open(['url' => url('/admin/' . $department . '/users/update', ['id'  =>  $user->unique_id]), 'id'    =>  'users']) !!}
+                    {!! Form::open(['url' => ['/admin/cms/pages/update', $id]]) !!}
                     <div class="box-body">
                         <!-- form start -->
                         <div class="form-group">
                             <label>
-                                Name
+                                Title
                             </label>
-                            <input class="form-control" name="name" placeholder="Enter name" type="text" value="{{ $user->name }}">
+                            <input class="form-control" name="title" placeholder="Enter title" type="text" value="{{ isset($page->title) ? $page->title : old('title') }}">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
-                                Email
+                                URL
                             </label>
-                            <input class="form-control" name="email" placeholder="Enter email" type="email" value="{{ $user->email }}">
+                            <input class="form-control" name="slug" placeholder="Enter url" type="text" value="{{ isset($page->slug) ? $page->slug : old('slug') }}">
+                            </input>
+                        </div>
+                        <div class="form-group">
+                            <label>Banner Content</label>
+                            <textarea class="summernote-editor" name="banner_content">{{ isset($page->banner_content) ? $page->banner_content : old('banner_content') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Main Content</label>
+                            <textarea class="summernote-editor" name="main_content">{{ isset($page->main_content) ? $page->main_content : old('main_content') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Ordering
+                            </label>
+                            <input class="form-control" name="ordering" placeholder="Enter order" type="number" value="{{ isset($page->ordering) ? $page->ordering : 0 }}">
                             </input>
                         </div>
                         <div class="form-group">
                             <label>
-                                Password
+                                Display
                             </label>
-                            <input class="form-control" name="password" placeholder="Enter password" type="password">
-                            </input>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                Confirm Password
-                            </label>
-                            <input class="form-control" name="confirm_password" placeholder="Confirm password" type="password">
-                            </input>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                Is Admin?
-                            </label>
-                            <input class="flat-green" name="is_admin" type="checkbox" value="1" @if($user->is_admin==1) checked @endif>
-                            </input>
-                        </div>
-                        <div class="form-group">
-                            <label>
-                                Active
-                            </label>
-                            <input class="flat-green" name="is_active" type="checkbox" value="1" @if($user->is_active==1) checked @endif>
-                            </input>
+                            <select class="form-control" name="display">
+                                <option value="1" {{ ($page->display==1) ? 'selected' : '' }}>
+                                    Yes
+                                </option>
+                                <option value="0" {{ ($page->display==0) ? 'selected' : '' }}>
+                                    No
+                                </option>
+                            </select>
                         </div>
                         <!-- /.box-body -->
-                        
                     </div>
                     <div class="box-footer">
-                        <a class="btn btn-default" href="{{ url('/admin/' . $department . '/users') }}">
+                        <a class="btn btn-default" href="{{ url('/admin/cms/pages') }}">
                             Cancel
                         </a>
                         <button class="btn btn-primary pull-right" type="submit">
-                        <i aria-hidden="true" class="fa fa-floppy-o">
-                        </i>
-                        Submit
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
                         </button>
                     </div>
                     {!! Form::close() !!}
