@@ -80,34 +80,6 @@
                                 </tr>
                                 @endfor
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        Submitted Date
-                                    </th>
-                                    <th>
-                                        @if($department=='sales') Sales @else PM @endif
-                                    </th>
-                                    <th>
-                                        Company Name
-                                    </th>
-                                    <th>
-                                        Customer Name
-                                    </th>
-                                    <th>
-                                        Customer Email
-                                    </th>
-                                    <th>
-                                        View
-                                    </th>
-                                    <th>
-                                        Delete
-                                    </th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

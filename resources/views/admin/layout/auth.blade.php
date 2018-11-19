@@ -123,8 +123,8 @@
 
                 // Define function to open filemanager window
                 var lfm = function(options, cb) {
-                    var route_prefix = (options && options.prefix) ? options.prefix : '/filemanager';
-                    window.open('{{ url("/") }}' + route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+                    var route_prefix = (options && options.prefix) ? options.prefix : '/';
+                    window.open( '{{ url("/") }}' +route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
                     window.SetUrl = cb;
                 };
                 
@@ -132,7 +132,7 @@
                 var LFMButton = function(context) {
                     var ui = $.summernote.ui;
                     var button = ui.button({
-                        contents: '<i class="fa fa-picture-o" aria-hidden="true"></i> ',
+                        contents: '<i class="note-icon-picture"></i> ',
                         tooltip: 'Insert image with filemanager',
                         click: function() {
                     

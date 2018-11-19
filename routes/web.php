@@ -37,11 +37,11 @@ Route::group(['prefix' => 'admin'], function () {
     /* CMS */
     Route::get('/cms/pages', 'AdminAuth\CMS\PagesController@index');
     Route::get('/cms/pages/create', 'AdminAuth\CMS\PagesController@create');
+    Route::post('/cms/pages/store', 'AdminAuth\CMS\PagesController@store');
+    Route::get('/cms/pages/edit/{id}', 'AdminAuth\CMS\PagesController@edit');
+    Route::post('/cms/pages/update/{id}', 'AdminAuth\CMS\PagesController@update');
 
-    Route::get('/cms/settings/logo', 'AdminAuth\CMS\SettingsController@logo');
-    Route::get('/cms/settings/header', 'AdminAuth\CMS\SettingsController@header');
-
-    /* SALES */
+    /* DEPARTMENT */
     Route::get('/{department}/users', 'AdminAuth\DepartmentController@users');
     Route::get('/{department}/users/create', 'AdminAuth\DepartmentController@create_users');
     Route::post('/{department}/users/store', 'AdminAuth\DepartmentController@store_users');
