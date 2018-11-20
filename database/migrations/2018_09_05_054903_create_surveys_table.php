@@ -15,9 +15,11 @@ class CreateSurveysTable extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('unique_id')->default('verz_' . uniqid());
-            $table->integer('_for_id');
-            $table->text('content');
+            $table->string('unique_id');
+            $table->string('customer_id');
+            $table->text('survey')->nullable();
+            $table->boolean('status')->nullable();
+            $table->timestamp('submitted_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

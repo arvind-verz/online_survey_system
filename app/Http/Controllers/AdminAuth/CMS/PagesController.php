@@ -11,6 +11,7 @@ class PagesController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('auth:admin');
         $this->uniqid = uniqid();
     }
     /**
@@ -57,7 +58,7 @@ class PagesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $page                 = new Page();
+        $page                 = new Page;
         $page->unique_id      = $this->uniqid;
         $page->title          = $request->title;
         $page->slug           = str_slug($request->slug);

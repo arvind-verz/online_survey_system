@@ -12,6 +12,8 @@
     $(document).ready(function() {
     	$('#datatable').DataTable();
 
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+        });
 	});
 </script>

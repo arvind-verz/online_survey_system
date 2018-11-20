@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -18,7 +19,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers, LogsoutGuard {
         LogsoutGuard::logout insteadof AuthenticatesUsers;
@@ -36,7 +37,7 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    function __construct()
     {
         $this->middleware('admin.guest', ['except' => 'logout']);
     }
@@ -46,7 +47,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    function showLoginForm()
     {
         return view('admin.auth.login');
     }
@@ -56,12 +57,54 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    protected function guard()
+    function guard()
     {
         return Auth::guard('admin');
     }
 
-    public function logoutToPath() {
+    function logoutToPath()
+    {
         return '/admin';
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->guard()->validate($this->credentials($request))) {
+            $user = $this->guard()->getLastAttempted();
+            $status = '';
+            if(!$user->is_verified)
+            {
+                $status = 'not_verified';
+            }
+            if(!$user->is_active)
+            {
+                $status = 'inactive';
+            }
+            if(!empty($status)) {
+                return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([trans('auth.' . $status)]);
+            }
+            else {
+                if ($this->attemptLogin($request)) {
+                    return $this->sendLoginResponse($request);
+                }
+            }
+        }
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 }

@@ -63,7 +63,9 @@
                                         {{ $page->updated_at }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('admin/cms/pages/edit/' . $page->id) }}" class="btn btn-warning">Edit</a>
+                                        <a href="{{ url('admin/cms/pages/edit/' . $page->id) }}" class="btn btn-primary btn-sm" title="Edit">
+                                            <i aria-hidden="true" class="fa fa-pencil-square"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach
