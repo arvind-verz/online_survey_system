@@ -1,12 +1,11 @@
 @extends('admin.layout.auth')
-
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{ $page_title }}
+        {{ $page_title }}
         </h1>
         {{ Breadcrumbs::render('department', $department, 'survey') }}
     </section>
@@ -39,46 +38,47 @@
                                         Customer Email
                                     </th>
                                     <th>
-                                        View
-                                    </th>
-                                    <th>
-                                        Delete
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i=1;$i<20;$i++)
+                                @php $i = 1; @endphp
+                                @if($surveys->count())
+                                @foreach($surveys as $survey)
                                 <tr>
                                     <td>
                                         {{ $i }}
                                     </td>
                                     <td>
-                                        {{ date('Y-m-d') }}
+                                        {{ isset($survey->submitted_at) ? $survey->submitted_at : '-' }}
                                     </td>
                                     <td>
                                         Tiger Xenon
                                     </td>
                                     <td>
-                                        Verz Design
+                                        {{ isset($survey->company_name) ? $survey->company_name : '-' }}
                                     </td>
                                     <td>
-                                        Arvind
+                                        {{ isset($survey->firstname) ? $survey->firstname . ' ' . $survey->lastname : '-' }}
                                     </td>
                                     <td>
-                                        arvind.verz@gmail.com
+                                        {{ isset($survey->email) ? $survey->email : '-' }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/survey/view') }}">
+                                        <a href="{{ url('/admin/' . $department . '/survey/view') }}" class="btn btn-primary btn-sm" title="View">
                                             <i aria-hidden="true" class="fa fa-eye">
                                             </i>
                                         </a>
-                                    </td>
-                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" title="Delete">
                                         <i aria-hidden="true" class="fa fa-trash">
                                         </i>
+                                        </button>
                                     </td>
                                 </tr>
-                                @endfor
+                                @php $i++; @endphp
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

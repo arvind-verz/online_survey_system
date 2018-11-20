@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Admin;
 use App\Customer;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Survey;
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
@@ -17,6 +17,7 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth:admin');
         $this->unique_id = 'verz_' . uniqid();
+        $this->survey_id = 'survey_' . uniqid();
     }
 
     /**
@@ -26,7 +27,14 @@ class DepartmentController extends Controller
      */
     public function users($department)
     {
-        $users = Admin::where('department', $department)->get();
+        if(Auth::user()->id==1)
+        {
+            $users = Admin::where(['department'  => $department])->get();
+        }
+        else
+        {
+            $users = Admin::where(['department'  => $department, 'added_by' => Auth::user()->id])->where('id', '!=', 1)->get();
+        }
         return view('admin.department.users.index', [
             'page_title' => 'Users',
             'department' => $department,
@@ -57,9 +65,7 @@ class DepartmentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $user             = new Admin;
@@ -68,17 +74,17 @@ class DepartmentController extends Controller
         $user->name       = $request->name;
         $user->email      = $request->email;
         $user->password   = bcrypt($request->password);
-        $user->is_admin   = isset($request->is_admin) ? $request->is_admin : 2;
+        $user->is_admin   = isset($request->is_admin) ? $request->is_admin : 0;
         $user->is_active  = isset($request->is_active) ? $request->is_active : 0;
         $user->added_by   = Auth::user()->id;
         $user->save();
 
-        return back()->with('success', 'User' . __('constant.SUCCESS'));
+        return back()->with('success', config('constant.user') . __('messages.created'));
     }
 
     public function edit_users($department, $id)
     {
-        $user = User::where('unique_id', $id)->first();
+        $user = Admin::where('unique_id', $id)->first();
         return view('admin.department.users.edit', [
             'page_title' => 'Edit',
             'department' => $department,
@@ -88,7 +94,7 @@ class DepartmentController extends Controller
 
     public function update_users(Request $request, $department, $id)
     {
-        $user      = User::where('unique_id', $id)->first();
+        $user      = Admin::where('unique_id', $id)->first();
         $validator = Validator::make($request->all(), [
             'name'  => 'required|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -102,9 +108,7 @@ class DepartmentController extends Controller
         }
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $user->name  = $request->name;
@@ -117,12 +121,19 @@ class DepartmentController extends Controller
         $user->department = $department;
         $user->save();
 
-        return back()->with('success', 'User' . __('constant.UPDATED'));
+        return back()->with('success', config('constant.user') . __('messages.updated'));
     }
 
     public function customers($department)
     {
-        $customers = Customer::where('department', $department)->get();
+        if(Auth::user()->id==1)
+        {
+            $customers = Customer::where('department', $department)->get();
+        }
+        else
+        {
+            $customers = Customer::where(['department'  => $department, 'added_by'  => Auth::user()->id])->get();
+        }
         return view('admin.department.customers.index', [
             'page_title' => 'Customers',
             'department' => $department,
@@ -152,7 +163,7 @@ class DepartmentController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-
+        
         $customer                   = new Customer;
         $customer->unique_id        = $this->unique_id;
         $customer->department       = $department;
@@ -163,6 +174,14 @@ class DepartmentController extends Controller
         $customer->appointment_date = $request->appointment_date;
         $customer->added_by         = Auth::id();
         $customer->save();
+
+        if ($request->send_survey == 1) {
+            $survey              = new Survey;
+            $survey->unique_id   = $this->survey_id;
+            $survey->customer_id = $this->unique_id;
+            $survey->status      = 1;
+            $survey->save();
+        }
 
         return back()->with('success', config('constant.customer') . __('messages.created'));
     }
@@ -197,22 +216,43 @@ class DepartmentController extends Controller
         $customer->appointment_date = $request->appointment_date;
         $customer->save();
 
+        $survey = Survey::where('customer_id', $id)->count();
+        if (!$survey) {
+            $survey              = new Survey;
+            $survey->unique_id   = $this->survey_id;
+            $survey->customer_id = $id;
+            $survey->status      = 1;
+            $survey->save();
+        }
+
         return back()->with('success', config('constant.customer') . __('messages.updated'));
     }
 
     public function survey($department)
     {
+        if(Auth::user()->id==1)
+        {
+            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get();
+        }
+        else
+        {
+            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department'  => $department, 'customers.added_by'  => Auth::user()->id])->get();
+        }
         return view('admin.department.survey.index', [
             'page_title' => 'Survey',
             'department' => $department,
+            'surveys'    =>  $surveys,
         ]);
     }
 
     public function view_survey($department)
     {
+        
+
         return view('admin.department.survey.view', [
             'page_title' => 'View',
             'department' => $department,
+            
         ]);
     }
 

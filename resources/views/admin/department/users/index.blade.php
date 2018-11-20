@@ -40,10 +40,7 @@
                                         Active
                                     </th>
                                     <th>
-                                        Edit
-                                    </th>
-                                    <th>
-                                        Export
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
@@ -65,14 +62,10 @@
                                         @if($user->is_active==1) Yes @else No @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/users/edit/' . $user->unique_id) }}">
+                                        <a href="{{ url('/admin/' . $department . '/users/edit/' . $user->unique_id) }}" class="btn btn-primary btn-sm" title="Edit">
                                             <i aria-hidden="true" class="fa fa-pencil-square">
                                             </i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        <i aria-hidden="true" class="fa fa-file-excel-o">
-                                        </i>
                                     </td>
                                 </tr>
                                 @endforeach

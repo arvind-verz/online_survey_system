@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
+                    @include('admin.include.status')
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/loginpanel') }}">
                         {{ csrf_field() }}
 

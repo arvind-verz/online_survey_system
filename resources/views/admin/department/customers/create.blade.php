@@ -54,6 +54,19 @@
                             <input class="form-control datepicker" name="appointment_date" placeholder="Enter date" type="text" value="{{ date('Y-m-d') }}">
                             </input>
                         </div>
+                        <div class="form-group">
+                            <label>
+                                Send Survey
+                            </label>
+                            <select class="form-control" name="send_survey">
+                                <option value="1" selected="selected">
+                                    Yes
+                                </option>
+                                <option value="0">
+                                    No
+                                </option>
+                            </select>
+                        </div>
                         <!-- /.box-body -->
                     </div>
                     <div class="box-footer">

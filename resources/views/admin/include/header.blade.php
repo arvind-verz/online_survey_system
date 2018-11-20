@@ -86,7 +86,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <img alt="User Image" class="user-image" src="http://via.placeholder.com/160x160">
                             <span class="hidden-xs">
-                                Admin
+                                {{ Auth::user()->name }}
                             </span>
                         </img>
                     </a>
@@ -95,7 +95,7 @@
                         <li class="user-header">
                             <img alt="User Image" class="img-circle" src="http://via.placeholder.com/160x160">
                                 <p>
-                                    Admin
+                                    {{ Auth::user()->name }}
                                 </p>
                             </img>
                         </li>

@@ -53,7 +53,7 @@
                                 Display
                             </label>
                             <select class="form-control" name="display">
-                                <option value="1">
+                                <option value="1" selected="selected">
                                     Yes
                                 </option>
                                 <option value="0">

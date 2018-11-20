@@ -71,17 +71,17 @@
                                         {{ $customer->email }}
                                     </td>
                                     <td>
-                                        Sent
+                                        {{ get_survey_status($customer->unique_id) }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/customers/edit/' . $customer->unique_id) }}">
+                                        <a href="{{ url('/admin/' . $department . '/customers/edit/' . $customer->unique_id) }}" class="btn btn-primary btn-sm" title="Edit">
                                             <i aria-hidden="true" class="fa fa-pencil-square">
                                             </i>
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
                                 @php $i++; @endphp
+                                @endforeach
                                 @endif
                             </tbody>
                         </table>
