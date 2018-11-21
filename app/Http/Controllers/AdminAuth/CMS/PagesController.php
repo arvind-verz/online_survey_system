@@ -21,7 +21,8 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $pages = Page::where('display', 1)->get();
+        $request->session()->flush();
+        $pages = Page::all();
 
         return view('admin.cms.pages.index', [
             'page_title' => 'Pages',
@@ -51,7 +52,7 @@ class PagesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'slug'  => 'required|unique:slug',
+            'slug'  => 'required|unique:pages,slug',
         ]);
 
         if ($validator->fails()) {
@@ -108,7 +109,7 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $page      = Page::find($id)->first();
+        $page      = Page::find($id);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'slug'  => 'required|unique:pages,slug,' . $page->id,

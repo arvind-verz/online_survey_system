@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('/{survey_id}/{slug}', 'Auth\CMSController@index');
+
 
 Auth::routes();
 
@@ -54,3 +54,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/{department}/survey', 'AdminAuth\DepartmentController@survey');
     Route::get('/{department}/survey/view', 'AdminAuth\DepartmentController@view_survey');
 });
+
+
+Route::get('/{survey_id}/{slug}', 'Auth\CMSController@index');
+Route::post('/{survey_id}/{slug}/store', 'Auth\CMSController@store');

@@ -18,4 +18,10 @@ if (!function_exists('get_survey_status')) {
         }
         return "-";
     }
+
+    function get_slug_array() {
+
+        $slug_list = ['web-design', 'web-programming', 'project-management', 'feedback', 'thank-you'];
+        return $slug_list;
+    }
 }
