@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Page;
+use App\Survey;
+use Illuminate\Http\Request;
 
 class CMSController extends Controller
 {
@@ -14,7 +16,13 @@ class CMSController extends Controller
      */
     public function index($survey_id, $slug)
     {
-        return view('welcome');
+        $page = Page::where(['slug' => $slug, 'display' => 1])->first();
+
+        return view('pages', [
+            'title'     => $page->title,
+            'page'      => $page,
+            'survey_id' => $survey_id,
+        ]);
     }
 
     /**
@@ -33,9 +41,62 @@ class CMSController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $survey_id, $slug)
     {
-        //
+        /*$request->session()->flush();
+        $data['arvind'] = [
+            'age'   =>  25,
+            'location'  =>  'India',
+        ];
+
+        if($request->session()->has('mydata')) {
+            $request->session()->push('mydata', $data);
+        }
+        else {
+            $request->session()->put('mydata', $data);
+        }
+*/
+        dd($request->session()->get('mydata'));
+        $survey = Survey::where('unique_id', $survey_id)->first();
+        $slug_array = get_slug_array();
+        /*$data['web-design'] = [
+            'age'   =>  25,
+            'location'  =>  'India',
+        ];*/
+//$request->session()->flush();
+        /*if($request->session()->has('mydata')) {
+
+            $request->session()->push('mydata', $data);
+        }
+        else {
+            //dd("Hello");
+            $request->session()->put('mydata', $data);
+        }
+        dd($request->session()->get('mydata'));*/
+//$request->session()->flush();
+        $data['arvind'] = [
+            'age'   =>  25,
+            'location'  =>  'India',
+        ];
+
+        if($request->session()->has('mydata')) {
+            $request->session()->push('mydata', $data);
+        }
+        else {
+            $request->session()->put('mydata', $data);
+        }
+
+        dd($request->session()->get('mydata'));
+        $slug_array_flip = array_flip($slug_array);
+        if($slug_array_flip==(count($slug_array_flip)-1)) {
+            $survey->status = 2;
+            $survey->updated_at = date('Y-m-d H:i:s');
+        }
+        else {
+            $survey->survey = json_encode($request->session()->get('mydata'));
+        }
+        $survey->save();
+        return redirect($survey_id . '/' . $slug_array[($slug_array_flip[$slug]+1)]);
     }
 
     /**

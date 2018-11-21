@@ -2,63 +2,57 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-            <meta content="IE=edge" http-equiv="X-UA-Compatible">
-                <meta content="width=device-width, initial-scale=1" name="viewport">
-                    <!-- CSRF Token -->
-                    <meta content="{{ csrf_token() }}" name="csrf-token">
-                        <title>
-                            {{ config('app.name', 'Survey System') . ' - ' . $page_title }}
-                        </title>
-                        <!-- Styles -->
-                        <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet"/>
-                        <!-- Font Awesome -->
-                        <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
-                        <!-- Ionicons -->
-                        <link href="{{ asset('plugins/Ionicons/css/ionicons.min.css') }}" rel="stylesheet"/>
-                        <!-- Theme style -->
-                        <link href="{{ asset('dist/css/AdminLTE.min.css') }}" rel="stylesheet"/>
-                        <!-- AdminLTE Skins. Choose a skin from the css/skins
-   folder instead of downloading all of them to reduce the load. -->
-                        <link href="{{ asset('dist/css/skins/_all-skins.min.css') }}" rel="stylesheet"/>
-                        <!-- Morris chart -->
-                        <link href="{{ asset('plugins/morris.js/morris.css') }}" rel="stylesheet"/>
-                        <!-- jvectormap -->
-                        <link href="{{ asset('plugins/jvectormap/jquery-jvectormap.css') }}" rel="stylesheet"/>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <!-- CSRF Token -->
+        <meta content="{{ csrf_token() }}" name="csrf-token">
+        <title>
+            {{ config('app.name', 'Survey System') . ' - ' . $page_title }}
+        </title>
+        <!-- Styles -->
+        <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" />
+        <!-- Font Awesome -->
+        <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
+        <!-- Ionicons -->
+        <link href="{{ asset('plugins/Ionicons/css/ionicons.min.css') }}" rel="stylesheet" />
+        <!-- Theme style -->
+        <link href="{{ asset('dist/css/AdminLTE.min.css') }}" rel="stylesheet" />
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+        <link href="{{ asset('dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" />
+        <!-- Morris chart -->
+        <link href="{{ asset('plugins/morris.js/morris.css') }}" rel="stylesheet" />
+        <!-- jvectormap -->
+        <link href="{{ asset('plugins/jvectormap/jquery-jvectormap.css') }}" rel="stylesheet" />
 
-                        <link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet"/>
-                        <!-- Date Picker -->
-                        <link href="{{ asset('plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
-                        <!-- Daterange picker -->
-                        <link href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet"/>
-                        <!-- bootstrap wysihtml5 - text editor -->
-                        <link href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet"/>
-                        <link href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-                            <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet" type="text/css">
-                                <!-- Scripts -->
-                                <script>
-                                    window.Laravel = <?php echo json_encode([
-                                        'csrfToken' => csrf_token(),
-                                    ]); ?>
-                                </script>
-                                <!-- jQuery 3 -->
-                                <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
-                                </script>
-                                <!-- jQuery UI 1.11.4 -->
-                                <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}">
-                                </script>
-                                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-                                <script>
-                                    $.widget.bridge('uibutton', $.ui.button);
-                                </script>
-                                <!-- Bootstrap 3.3.7 -->
-                                <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
-                                </script>
-                            </link>
-                        </link>
-                    </meta>
-                </meta>
-            </meta>
-        </meta>
+        <link href="{{ asset('plugins/iCheck/all.css') }}" rel="stylesheet" />
+        <!-- Date Picker -->
+        <link href="{{ asset('plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
+        <!-- Daterange picker -->
+        <link href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+        <!-- bootstrap wysihtml5 - text editor -->
+        <link href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet" type="text/css">
+        <!-- Scripts -->
+        <script>
+            window.Laravel = <?php echo json_encode([
+                                            'csrfToken' => csrf_token(),
+                                        ]); ?>
+        </script>
+        <!-- jQuery 3 -->
+        <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}">
+        </script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}">
+        </script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}">
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
