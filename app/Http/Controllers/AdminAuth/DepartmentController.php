@@ -5,9 +5,11 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Admin;
 use App\Customer;
 use App\Http\Controllers\Controller;
+use App\Mail\EmailRegistration;
 use App\Survey;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 
 class DepartmentController extends Controller
@@ -27,13 +29,10 @@ class DepartmentController extends Controller
      */
     public function users($department)
     {
-        if(Auth::user()->id==1)
-        {
-            $users = Admin::where(['department'  => $department])->get();
-        }
-        else
-        {
-            $users = Admin::where(['department'  => $department, 'added_by' => Auth::user()->id])->where('id', '!=', 1)->get();
+        if (Auth::user()->id == 1) {
+            $users = Admin::where(['department' => $department])->get();
+        } else {
+            $users = Admin::where(['department' => $department, 'added_by' => Auth::user()->id])->where('id', '!=', 1)->get();
         }
         return view('admin.department.users.index', [
             'page_title' => 'Users',
@@ -126,13 +125,10 @@ class DepartmentController extends Controller
 
     public function customers($department)
     {
-        if(Auth::user()->id==1)
-        {
+        if (Auth::user()->id == 1) {
             $customers = Customer::where('department', $department)->get();
-        }
-        else
-        {
-            $customers = Customer::where(['department'  => $department, 'added_by'  => Auth::user()->id])->get();
+        } else {
+            $customers = Customer::where(['department' => $department, 'added_by' => Auth::user()->id])->get();
         }
         return view('admin.department.customers.index', [
             'page_title' => 'Customers',
@@ -163,7 +159,7 @@ class DepartmentController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        
+
         $customer                   = new Customer;
         $customer->unique_id        = $this->unique_id;
         $customer->department       = $department;
@@ -176,11 +172,22 @@ class DepartmentController extends Controller
         $customer->save();
 
         if ($request->send_survey == 1) {
-            $survey              = new Survey;
-            $survey->unique_id   = $this->survey_id;
-            $survey->customer_id = $this->unique_id;
-            $survey->status      = 1;
-            $survey->save();
+            $registration = [
+                'sender_name'   => Auth::user()->name,
+                'sender_email'  => Auth::user()->email,
+                'url'           => url($this->survey_id . '/' . 'web-design'),
+                'receiver_name' => $request->firstname . ' ' . $request->lastname,
+            ];
+
+            Mail::to($request->email)->send(new EmailRegistration($registration));
+
+            if(!count(Mail::failures())) {
+                $survey              = new Survey;
+                $survey->unique_id   = $this->survey_id;
+                $survey->customer_id = $this->unique_id;
+                $survey->status      = 1;
+                $survey->save();
+            }        
         }
 
         return back()->with('success', config('constant.customer') . __('messages.created'));
@@ -218,11 +225,22 @@ class DepartmentController extends Controller
 
         $survey = Survey::where('customer_id', $id)->count();
         if (!$survey) {
-            $survey              = new Survey;
-            $survey->unique_id   = $this->survey_id;
-            $survey->customer_id = $id;
-            $survey->status      = 1;
-            $survey->save();
+            $registration = [
+                'sender_name'   => Auth::user()->name,
+                'sender_email'  => Auth::user()->email,
+                'url'           => url($this->survey_id . '/' . 'web-design'),
+                'receiver_name' => $request->firstname . ' ' . $request->lastname,
+            ];
+            
+            Mail::to($request->email)->send(new EmailRegistration($registration));
+
+            if(!count(Mail::failures())) {
+                $survey              = new Survey;
+                $survey->unique_id   = $this->survey_id;
+                $survey->customer_id = $id;
+                $survey->status      = 1;
+                $survey->save();
+            }            
         }
 
         return back()->with('success', config('constant.customer') . __('messages.updated'));
@@ -230,29 +248,25 @@ class DepartmentController extends Controller
 
     public function survey($department)
     {
-        if(Auth::user()->id==1)
-        {
+        if (Auth::user()->id == 1) {
             $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get();
-        }
-        else
-        {
-            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department'  => $department, 'customers.added_by'  => Auth::user()->id])->get();
+        } else {
+            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department' => $department, 'customers.added_by' => Auth::user()->id])->get();
         }
         return view('admin.department.survey.index', [
             'page_title' => 'Survey',
             'department' => $department,
-            'surveys'    =>  $surveys,
+            'surveys'    => $surveys,
         ]);
     }
 
     public function view_survey($department)
     {
-        
 
         return view('admin.department.survey.view', [
             'page_title' => 'View',
             'department' => $department,
-            
+
         ]);
     }
 

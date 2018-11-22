@@ -20,8 +20,18 @@ if (!function_exists('get_survey_status')) {
     }
 
     function get_slug_array() {
-
-        $slug_list = ['web-design', 'web-programming', 'project-management', 'feedback', 'thank-you'];
+        $slug_list = [
+            'web-design', 'web-programming', 'project-management', 'feedback', 'thank-you'
+        ];
+        
         return $slug_list;
+    }
+
+    function get_modules() {
+        $modules_array = [
+            'DASHBOARD', 'USERS', 'CUSTOMERS', 'SURVEY', 'ROLES_AND_PERMISSION',
+        ];
+
+        return $modules_array;
     }
 }

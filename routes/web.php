@@ -28,6 +28,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
+    Route::get('/home', 'AdminAuth\Account\DashboardController@index');
+
+    /* ROLES AND PERMISSION */
+    Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
+    Route::get('/roles-and-permission/edit/{id}', 'AdminAuth\Account\PermissionController@edit');
+    Route::get('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
+
     /* PROFILE */
     Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
 
