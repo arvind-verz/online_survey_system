@@ -21,7 +21,6 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $request->session()->flush();
         $pages = Page::all();
 
         return view('admin.cms.pages.index', [

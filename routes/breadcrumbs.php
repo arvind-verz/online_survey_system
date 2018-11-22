@@ -8,6 +8,16 @@ Breadcrumbs::for('profile', function ($trail) {
     $trail->push('Profile', url('/admin/profile'));
 });
 
+Breadcrumbs::for('roles-and-permission', function ($trail) {
+	$trail->parent('dashboard');
+    $trail->push('Roles and Permission', url('/admin/roles-and-permission'));
+});
+
+Breadcrumbs::for('edit-roles-and-permission', function ($trail, $id) {
+	$trail->parent('roles-and-permission');
+    $trail->push('Edit', url('/admin/edit-roles-and-permission/' . $id));
+});
+
 Breadcrumbs::for('pages', function ($trail) {
 	$trail->parent('dashboard');
     $trail->push('Pages', url('/admin/cms/pages'));

@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
-                        Dashboard
+                        Logged in successfully!
                     </div>
                 </div>
             </div>
