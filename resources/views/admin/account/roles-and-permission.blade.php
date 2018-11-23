@@ -33,10 +33,10 @@
                                         {{ isset($role->name) ? $role->name : '' }}
                                     </td>
                                     <td>
-                                        
+                                        {{ implode(", ", get_modules()) }}
                                     </td>
                                     <td>
-                                        
+                                        {{ 'view, create, edit, delete' }}
                                     </td>
                                     <td>
                                         <a href="{{ url('admin/roles-and-permission/edit/' . $role->id) }}" class="btn btn-primary btn-sm" title="Edit">
@@ -48,13 +48,6 @@
                                 @endif
                             </tbody>
                         </table>
-                    </div>
-                    <div class="box-footer">
-                        <button class="btn btn-primary" type="submit">
-                        <i aria-hidden="true" class="fa fa-floppy-o">
-                        </i>
-                        Save
-                        </button>
                     </div>
                 </div>
             </div>

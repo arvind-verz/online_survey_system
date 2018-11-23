@@ -1,13 +1,13 @@
 <header class="main-header">
     <!-- Logo -->
-    <a class="logo" href="/">
+    <a class="logo" href="{{ url('/admin/home') }}">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
-            Admin
+            Survey Panel
         </span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            Admin
+            Survey Panel
         </span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
@@ -21,7 +21,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Notifications: style can be found in dropdown.less -->
-                <li class="dropdown notifications-menu">
+                <!-- <li class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell-o">
                         </i>
@@ -34,7 +34,7 @@
                             You have 10 notifications
                         </li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
+                            inner menu: contains the actual data
                             <ul class="menu">
                                 <li>
                                     <a href="#">
@@ -80,7 +80,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">

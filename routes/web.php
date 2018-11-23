@@ -28,15 +28,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
-    Route::get('/home', 'AdminAuth\Account\DashboardController@index');
+    Route::get('/home', 'AdminAuth\DashboardController@index');
 
+    Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
     /* ROLES AND PERMISSION */
     Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
     Route::get('/roles-and-permission/edit/{id}', 'AdminAuth\Account\PermissionController@edit');
-    Route::get('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
+    Route::post('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
 
     /* PROFILE */
     Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
+    Route::post('/profile/update-user-details', 'AdminAuth\Account\ProfileController@update_user_details');
+    Route::post('/profile/update-user-password', 'AdminAuth\Account\ProfileController@update_user_password');
 
     /* CMS */
     Route::get('/cms/pages', 'AdminAuth\CMS\PagesController@index');
@@ -59,7 +62,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/{department}/customers/update/{id}', 'AdminAuth\DepartmentController@update_customers');
 
     Route::get('/{department}/survey', 'AdminAuth\DepartmentController@survey');
-    Route::get('/{department}/survey/view', 'AdminAuth\DepartmentController@view_survey');
+    Route::get('/{department}/survey/view/{survey_id}', 'AdminAuth\DepartmentController@survey_show');
+    Route::post('/{department}/survey/update-survey/{survey_id}', 'AdminAuth\DepartmentController@update_survey');
+    Route::get('/{department}/survey/delete-survey/{survey_id}', 'AdminAuth\DepartmentController@delete_survey');
 });
 
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\AdminAuth\Account;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Admin;
+use Auth;
+use Validator;
+use Hash;
 
 class ProfileController extends Controller
 {
@@ -43,6 +46,48 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function update_user_details(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required|max:255',
+            'email'            => 'required|email|unique:users,email,' . Auth::user()->id
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $admin = Admin::find(Auth::user()->id);
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->save();
+
+        return redirect()->back()->with('success', config('constant.profile') . __('messages.updated'));
+    }
+
+    public function update_user_password(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'old_password'  =>  'required',
+            'password'         => 'min:6',
+            'confirm_password' => 'required_with:password|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $admin = Admin::find(Auth::user()->id);
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return back()->with('error', __('messages.password_not_match'));
+        }
+
+        $admin->password = Hash::make($request->password);
+        $admin->save();
+
+        return redirect()->back()->with('success', config('constant.password') . __('messages.updated'));
     }
 
     /**

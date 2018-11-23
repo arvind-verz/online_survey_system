@@ -18,8 +18,11 @@ class DepartmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->unique_id = 'verz_' . uniqid();
-        $this->survey_id = 'survey_' . uniqid();
+        $this->unique_id             = 'verz_' . uniqid();
+        $this->survey_id             = 'survey_' . uniqid();
+        $this->module_name_users     = 'USERS';
+        $this->module_name_customers = 'CUSTOMERS';
+        $this->module_name_survey    = 'SURVEY';
     }
 
     /**
@@ -29,10 +32,12 @@ class DepartmentController extends Controller
      */
     public function users($department)
     {
-        if (Auth::user()->id == 1) {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_users, 'views');
+
+        if (Auth::user()->is_admin == 1) {
             $users = Admin::where(['department' => $department])->get();
         } else {
-            $users = Admin::where(['department' => $department, 'added_by' => Auth::user()->id])->where('id', '!=', 1)->get();
+            $users = Admin::where(['department' => $department, 'added_by' => Auth::user()->id])->where('is_admin', '!=', 1)->get();
         }
         return view('admin.department.users.index', [
             'page_title' => 'Users',
@@ -48,6 +53,8 @@ class DepartmentController extends Controller
      */
     public function create_users($department)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_users, 'creates');
+
         return view('admin.department.users.create', [
             'page_title' => 'Create',
             'department' => $department,
@@ -56,6 +63,8 @@ class DepartmentController extends Controller
 
     public function store_users(Request $request, $department)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_users, 'creates');
+
         $validator = Validator::make($request->all(), [
             'name'             => 'required|max:255',
             'email'            => 'required|email|unique:users,email',
@@ -64,7 +73,7 @@ class DepartmentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user             = new Admin;
@@ -78,11 +87,13 @@ class DepartmentController extends Controller
         $user->added_by   = Auth::user()->id;
         $user->save();
 
-        return back()->with('success', config('constant.user') . __('messages.created'));
+        return redirect()->back()->with('success', config('constant.user') . __('messages.created'));
     }
 
     public function edit_users($department, $id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_users, 'edits');
+
         $user = Admin::where('unique_id', $id)->first();
         return view('admin.department.users.edit', [
             'page_title' => 'Edit',
@@ -93,6 +104,8 @@ class DepartmentController extends Controller
 
     public function update_users(Request $request, $department, $id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_users, 'edits');
+
         $user      = Admin::where('unique_id', $id)->first();
         $validator = Validator::make($request->all(), [
             'name'  => 'required|max:255',
@@ -107,7 +120,7 @@ class DepartmentController extends Controller
         }
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user->name  = $request->name;
@@ -120,12 +133,14 @@ class DepartmentController extends Controller
         $user->department = $department;
         $user->save();
 
-        return back()->with('success', config('constant.user') . __('messages.updated'));
+        return redirect()->back()->with('success', config('constant.user') . __('messages.updated'));
     }
 
     public function customers($department)
     {
-        if (Auth::user()->id == 1) {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_customers, 'views');
+
+        if (Auth::user()->is_admin == 1) {
             $customers = Customer::where('department', $department)->get();
         } else {
             $customers = Customer::where(['department' => $department, 'added_by' => Auth::user()->id])->get();
@@ -144,6 +159,8 @@ class DepartmentController extends Controller
      */
     public function create_customers($department)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_customers, 'creates');
+
         return view('admin.department.customers.create', [
             'page_title' => 'Create',
             'department' => $department,
@@ -152,12 +169,14 @@ class DepartmentController extends Controller
 
     public function store_customers(Request $request, $department)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_customers, 'creates');
+
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $customer                   = new Customer;
@@ -181,20 +200,22 @@ class DepartmentController extends Controller
 
             Mail::to($request->email)->send(new EmailRegistration($registration));
 
-            if(!count(Mail::failures())) {
+            if (!count(Mail::failures())) {
                 $survey              = new Survey;
                 $survey->unique_id   = $this->survey_id;
                 $survey->customer_id = $this->unique_id;
                 $survey->status      = 1;
                 $survey->save();
-            }        
+            }
         }
 
-        return back()->with('success', config('constant.customer') . __('messages.created'));
+        return redirect()->back()->with('success', config('constant.customer') . __('messages.created'));
     }
 
     public function edit_customers($department, $id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_customers, 'edits');
+
         $customer = Customer::where('unique_id', $id)->first();
         return view('admin.department.customers.edit', [
             'page_title' => 'Edit',
@@ -205,13 +226,23 @@ class DepartmentController extends Controller
 
     public function update_customers(Request $request, $department, $id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_customers, 'edits');
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $customer  = Customer::where('unique_id', $id)->first();
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:customers,email,' . $customer->id,
         ]);
 
         if ($validator->fails()) {
-            return back()
+            return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -231,42 +262,34 @@ class DepartmentController extends Controller
                 'url'           => url($this->survey_id . '/' . 'web-design'),
                 'receiver_name' => $request->firstname . ' ' . $request->lastname,
             ];
-            
+
             Mail::to($request->email)->send(new EmailRegistration($registration));
 
-            if(!count(Mail::failures())) {
+            if (!count(Mail::failures())) {
                 $survey              = new Survey;
                 $survey->unique_id   = $this->survey_id;
                 $survey->customer_id = $id;
                 $survey->status      = 1;
                 $survey->save();
-            }            
+            }
         }
 
-        return back()->with('success', config('constant.customer') . __('messages.updated'));
+        return redirect()->back()->with('success', config('constant.customer') . __('messages.updated'));
     }
 
     public function survey($department)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'views');
+
         if (Auth::user()->id == 1) {
-            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get();
+            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get(['surveys.unique_id as survey_unique_id', 'customers.*', 'surveys.*']);
         } else {
-            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department' => $department, 'customers.added_by' => Auth::user()->id])->get();
+            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department' => $department, 'customers.added_by' => Auth::user()->id])->get(['surveys.unique_id as survey_unique_id', 'customers.*', 'surveys.*']);
         }
         return view('admin.department.survey.index', [
             'page_title' => 'Survey',
             'department' => $department,
             'surveys'    => $surveys,
-        ]);
-    }
-
-    public function view_survey($department)
-    {
-
-        return view('admin.department.survey.view', [
-            'page_title' => 'View',
-            'department' => $department,
-
         ]);
     }
 
@@ -287,9 +310,17 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function survey_show($department, $survey_id)
     {
-        //
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'views');
+
+        $survey = Survey::where('unique_id', $survey_id)->first();
+        return view('admin.department.survey.view', [
+            'page_title' => 'View #' . $survey_id,
+            'department' => $department,
+            'survey'     => $survey,
+            'survey_id'  => $survey_id,
+        ]);
     }
 
     /**
@@ -310,9 +341,23 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_survey(Request $request, $department, $survey_id)
     {
-        //
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'edits');
+
+        $validator = Validator::make($request->all(), [
+            'additional_comment' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $survey                     = Survey::where('unique_id', $survey_id)->first();
+        $survey->additional_comment = $request->additional_comment;
+        $survey->save();
+
+        return redirect()->back()->with('success', config('constant.survey') . __('messages.updated'));
     }
 
     /**
@@ -324,5 +369,14 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete_survey($department, $survey_id)
+    {
+        //is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'deletes');
+        $survey = Survey::where('unique_id', $survey_id)->first();
+        $survey->delete();
+
+        return redirect()->back()->with('success', config('constant.survey') . __('messages.deleted'));
     }
 }

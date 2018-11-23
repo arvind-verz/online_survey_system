@@ -4,12 +4,14 @@ namespace App\Http\Controllers\AdminAuth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->module_name = 'DASHBOARD';
     }
     /**
      * Display a listing of the resource.
@@ -18,8 +20,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'views');
+        
         return view('admin.home', [
-            'page_title'    =>  'Dashboard'
+            'page_title'    =>  'Dasasdhboard'
         ]);
     }
 

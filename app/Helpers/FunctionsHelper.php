@@ -1,5 +1,9 @@
 <?php
+
+use App\PermissionAccess;
 use App\Survey;
+use App\Admin;
+use Illuminate\Support\Facades\Redirect;
 
 if (!function_exists('get_survey_status')) {
 
@@ -11,27 +15,47 @@ if (!function_exists('get_survey_status')) {
      */
     function get_survey_status($customer_id)
     {
-    	$status_list = ['Sent', 'Complete'];
-    	$survey = Survey::where('customer_id', $customer_id)->first();
-        if($survey) {
-        	return $status_list[($survey->status-1)];
+        $status_list = ['Sent', 'Complete'];
+        $survey      = Survey::where('customer_id', $customer_id)->first();
+        if ($survey) {
+            return $status_list[($survey->status - 1)];
         }
         return "-";
     }
 
-    function get_slug_array() {
+    function get_slug_array()
+    {
         $slug_list = [
-            'web-design', 'web-programming', 'project-management', 'feedback', 'thank-you'
+            'web-design', 'web-programming', 'project-management', 'feedback', 'thank-you',
         ];
-        
+
         return $slug_list;
     }
 
-    function get_modules() {
+    function get_modules()
+    {
         $modules_array = [
-            'DASHBOARD', 'USERS', 'CUSTOMERS', 'SURVEY', 'ROLES_AND_PERMISSION',
+            'DASHBOARD', 'USERS', 'CUSTOMERS', 'SURVEY', 'ROLES_AND_PERMISSION', 'PAGES'
         ];
 
         return $modules_array;
+    }
+
+    function get_permission_access_value($type, $module, $value, $role_id)
+    {
+        $permission_access = PermissionAccess::where(['role_id' => $role_id, $type => $value, 'module' => $module])->get();
+        if ($permission_access->count()) {
+            return 'checked';
+        }
+    }
+
+    function is_permission_allowed($permission_id, $module, $type)
+    {
+        $permission_access = PermissionAccess::join('admins', 'permission_access.role_id', '=', 'admins.is_admin')
+            ->where(['permission_access.role_id' =>  $permission_id, 'permission_access.module' =>  $module, $type  =>  1])
+            ->get();
+        if(!$permission_access->count()) {
+            abort(redirect('admin/access-not-allowed'));
+        }
     }
 }

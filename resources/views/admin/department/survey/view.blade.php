@@ -10,6 +10,7 @@
         </h1>
         {{ Breadcrumbs::render('view_department', $department, 'survey') }}
     </section>
+    @include('admin.include.status')
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -23,12 +24,22 @@
                             Back
                         </a>
                     </div>
+                    {!! Form::open(['url' => '/admin/' . $department . '/survey/update-survey/' . $survey_id]) !!}
+                    @if($survey)
                     <div class="box-body">
                         <!-- form start -->
-                        <form role="form">
-                            
-                        </form>
+                        {{ $survey->survey }}
+                        <div class="form-group">
+                            <textarea name="additional_comment" class="form-control" rows="6" placeholder="Addional Comment">{{ isset($survey->additional_comment) ? $survey->additional_comment : '' }}</textarea>
+                        </div>
                     </div>
+                    <div class="box-footer">
+                        <button class="btn btn-primary " type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                        </button>
+                    </div>
+                    @endif
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

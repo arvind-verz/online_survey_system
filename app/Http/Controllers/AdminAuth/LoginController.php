@@ -87,7 +87,7 @@ class LoginController extends Controller
             {
                 $status = 'not_verified';
             }
-            if(!$user->is_active)
+            else if(!$user->is_active)
             {
                 $status = 'inactive';
             }

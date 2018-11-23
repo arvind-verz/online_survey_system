@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Page;
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 class PagesController extends Controller
 {
@@ -13,6 +14,7 @@ class PagesController extends Controller
     {
         $this->middleware('auth:admin');
         $this->uniqid = uniqid();
+        $this->module_name = 'PAGES';
     }
     /**
      * Display a listing of the resource.
@@ -21,6 +23,8 @@ class PagesController extends Controller
      */
     public function index()
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'views');
+
         $pages = Page::all();
 
         return view('admin.cms.pages.index', [
@@ -36,6 +40,8 @@ class PagesController extends Controller
      */
     public function create()
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'creates');
+
         return view('admin.cms.pages.create', [
             'page_title' => 'Create',
         ]);
@@ -49,6 +55,8 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'creates');
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'slug'  => 'required|unique:pages,slug',
@@ -90,6 +98,8 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'edits');
+
         $page = Page::findOrFail($id);
 
         return view('admin.cms.pages.edit', [
@@ -108,6 +118,8 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'edits');
+
         $page      = Page::find($id);
         $validator = Validator::make($request->all(), [
             'title' => 'required',

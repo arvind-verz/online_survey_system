@@ -20,7 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('company_name')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('appointment_date')->nullable();
             $table->string('added_by');
             $table->timestamps();
