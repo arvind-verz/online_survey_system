@@ -98,7 +98,7 @@
                 </ul>
                 <li class="@if(strpos(Route::currentRouteName(), 'admin.roles-and-permission') !== false) active @endif">
                     <a href="{{ url('/admin/roles-and-permission') }}">
-                        <i class="fa fa-user">
+                        <i class="fa fa-key">
                         </i>
                         <span>
                             Roles & Permission

@@ -10,6 +10,7 @@
         </h1>
         {{ Breadcrumbs::render('profile') }}
     </section>
+    @include('admin.include.status')
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -19,6 +20,7 @@
                     <div class="box-header">
                         User Details
                     </div>
+                    {!! Form::open(['url' => '/admin/profile/update-user-details']) !!}
                     <div class="box-body">
                         <div class="form-group">
                             <label>
@@ -42,11 +44,13 @@
                             Save
                         </button>
                     </div>
+                    {!! Form::close() !!}
                 </div>
                 <div class="box">
                     <div class="box-header">
                         Change Password
                     </div>
+                    {!! Form::open(['url' => '/admin/profile/update-user-password']) !!}
                     <div class="box-body">
                         <div class="form-group">
                             <label>
@@ -77,6 +81,7 @@
                             Save
                         </button>
                     </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

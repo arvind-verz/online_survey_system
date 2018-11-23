@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -30,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    protected $redirectTo = '/admin/profile';
 
     /**
      * Create a new controller instance.
@@ -65,22 +67,36 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $role       = Role::create(['guard_name' => 'admin', 'name' => 'admin']);
-        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create deptadmin']);
+        /*$role       = Role::create(['guard_name' => 'admin', 'name' => 'Super Admin']);
+        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'Create Department Admin']);
         $role->givePermissionTo($permission);
 
-        $role       = Role::create(['guard_name' => 'admin', 'name' => 'dept_admin']);
-        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'create staff']);
+        $role       = Role::create(['guard_name' => 'admin', 'name' => 'Department Admin']);
+        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'Create Staff']);
         $role->givePermissionTo($permission);
+
+        $role       = Role::create(['guard_name' => 'admin', 'name' => 'Staff']);
+        $permission = Permission::create(['guard_name' => 'admin', 'name' => 'View Survey']);
+        $role->givePermissionTo($permission);*/
 
         return Admin::create([
             'unique_id' => 'verz_' . uniqid(),
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
-            'is_admin'  => 0,
+            'is_admin'  => 1,
         ]);
 
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 
     /**

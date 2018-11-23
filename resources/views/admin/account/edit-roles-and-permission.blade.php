@@ -9,6 +9,7 @@
         </h1>
         {{ Breadcrumbs::render('edit-roles-and-permission', $id) }}
     </section>
+    @include('admin.include.status')
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -33,10 +34,10 @@
                                             </td>
                                             <td>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][view][]" value="1" checked="">Yes
+                                                    <input type="radio" name="module[<?php echo $i; ?>][view][]" value="1" {{ get_permission_access_value('views', $module, 1, $role_id) }}>Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][view][]" value="0">No
+                                                    <input type="radio" name="module[<?php echo $i; ?>][view][]" value="0" {{ get_permission_access_value('views', $module, 0, $role_id) }}>No
                                                 </label>
                                             </td>
                                         </tr>
@@ -44,10 +45,10 @@
                                             <td>Create</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][create][]" value="1" checked="">Yes
+                                                    <input type="radio" name="module[<?php echo $i; ?>][create][]" value="1" {{ get_permission_access_value('creates', $module, 1, $role_id) }}>Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][create][]" value="0">No
+                                                    <input type="radio" name="module[<?php echo $i; ?>][create][]" value="0" {{ get_permission_access_value('creates', $module, 0, $role_id) }}>No
                                                 </label>
                                             </td>
                                         </tr>
@@ -55,10 +56,10 @@
                                             <td>Edit</td>
                                             <td>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][edit][]" value="1" checked="">Yes
+                                                    <input type="radio" name="module[<?php echo $i; ?>][edit][]" value="1" {{ get_permission_access_value('edits', $module, 1, $role_id) }}>Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][edit][]" value="0">No
+                                                    <input type="radio" name="module[<?php echo $i; ?>][edit][]" value="0" {{ get_permission_access_value('edits', $module, 0, $role_id) }}>No
                                                 </label>
                                             </td>
                                         </tr>
@@ -67,10 +68,10 @@
                                             </td>
                                             <td>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][delete][]" value="1" checked="">Yes
+                                                    <input type="radio" name="module[<?php echo $i; ?>][delete][]" value="1"  {{ get_permission_access_value('deletes', $module, 1, $role_id) }}>Yes
                                                 </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="module[<?php echo $i; ?>][delete][]" value="0">No
+                                                    <input type="radio" name="module[<?php echo $i; ?>][delete][]" value="0" {{ get_permission_access_value('deletes', $module, 0, $role_id) }}>No
                                                 </label>
                                             </td>
                                         </tr>

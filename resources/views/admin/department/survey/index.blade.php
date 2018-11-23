@@ -9,6 +9,7 @@
         </h1>
         {{ Breadcrumbs::render('department', $department, 'survey') }}
     </section>
+    @include('admin.include.status')
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -66,11 +67,11 @@
                                         {{ isset($survey->email) ? $survey->email : '-' }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('/admin/' . $department . '/survey/view') }}" class="btn btn-primary btn-sm" title="View">
+                                        <a href="{{ url('/admin/' . $department . '/survey/view/' . $survey->survey_unique_id) }}" class="btn btn-primary btn-sm" title="View">
                                             <i aria-hidden="true" class="fa fa-eye">
                                             </i>
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-sm" title="Delete">
+                                        <button type="button" class="btn btn-danger btn-sm delete" title="Delete" onclick="delete_survey('{{ $department }}', '{{ $survey->survey_unique_id }}', this);">
                                         <i aria-hidden="true" class="fa fa-trash">
                                         </i>
                                         </button>
@@ -91,3 +92,11 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+<script type="text/javascript">
+    function delete_survey(department, survey_id, ref) {
+        var r = confirm("Are you sure to delete?");
+        if(r==true) {
+            window.location.href = '{{ url('/') }}/admin/' + department + '/survey/delete-survey/' + survey_id;
+        }
+    }
+</script>
