@@ -41,7 +41,7 @@
                                 @if($notifications)
                                 @foreach($notifications as $notification)
                                 <li>
-                                    <a href="#" class="read_notification">
+                                    <a href="{{ get_survey_link_by_department($notification->survey_id) }}" class="read_notification">
                                         <i class="fa fa-flag text-aqua">
                                         </i>
                                         {{ get_survey_notification_by_survey_id($notification->survey_id) }}

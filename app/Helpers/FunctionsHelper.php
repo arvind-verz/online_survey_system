@@ -96,7 +96,7 @@ if (!function_exists('get_survey_status')) {
     function get_survey_notification_by_survey_id($survey_id)
     {
         $survey = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('surveys.unique_id', $survey_id)->first();
-        return $survey->company_name . ' has reviewed survey on ' . date('d, M Y', strtotime($survey->submitted_at));
+        return $survey->company_name . ' has reviewed survey on ' . date('d, M Y H:i A', strtotime($survey->submitted_at));
     }
 
     function get_survey_link_by_department($survey_id)
