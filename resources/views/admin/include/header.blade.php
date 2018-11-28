@@ -97,6 +97,9 @@
                                 <p>
                                     {{ Auth::user()->name }}
                                 </p>
+                                <p>
+                                    {{ get_admin_type(Auth::user()->is_admin) }}
+                                </p>
                             </img>
                         </li>
                         <!-- Menu Footer-->

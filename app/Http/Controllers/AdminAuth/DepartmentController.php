@@ -6,6 +6,7 @@ use App\Admin;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailRegistration;
+use App\Mail\EmailUserRegistration;
 use App\Survey;
 use Auth;
 use Illuminate\Http\Request;
@@ -76,13 +77,38 @@ class DepartmentController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $registration = [
+            'sender_name'       => Auth::user()->name,
+            'sender_email'      => Auth::user()->email,
+            'url'               => url('verification/' . $this->unique_id),
+            'login_url'         => url('admin/login'),
+            'receiver_email'    => $request->email,
+            'receiver_password' => $request->password,
+            'receiver_name'     => $request->name,
+        ];
+
+        Mail::to($request->email)->send(new EmailUserRegistration($registration));
+
+        if (count(Mail::failures())) {
+            return redirect()->back()->with('error', __('messages.went_wrong'));
+        }
+
+        if(Auth::user()->is_admin==1)
+        {
+            $is_admin = 2;
+        }
+        else
+        {
+            $is_admin = 3;
+        }
+
         $user             = new Admin;
         $user->unique_id  = $this->unique_id;
         $user->department = $department;
         $user->name       = $request->name;
         $user->email      = $request->email;
         $user->password   = bcrypt($request->password);
-        $user->is_admin   = isset($request->is_admin) ? $request->is_admin : 0;
+        $user->is_admin   = $is_admin;
         $user->is_active  = isset($request->is_active) ? $request->is_active : 0;
         $user->added_by   = Auth::user()->id;
         $user->save();
@@ -200,13 +226,14 @@ class DepartmentController extends Controller
 
             Mail::to($request->email)->send(new EmailRegistration($registration));
 
-            if (!count(Mail::failures())) {
-                $survey              = new Survey;
-                $survey->unique_id   = $this->survey_id;
-                $survey->customer_id = $this->unique_id;
-                $survey->status      = 1;
-                $survey->save();
+            if (count(Mail::failures())) {
+                return redirect()->back()->with('error', __('messages.went_wrong'));
             }
+            $survey              = new Survey;
+            $survey->unique_id   = $this->survey_id;
+            $survey->customer_id = $this->unique_id;
+            $survey->status      = 1;
+            $survey->save();
         }
 
         return redirect()->back()->with('success', config('constant.customer') . __('messages.created'));
@@ -237,15 +264,6 @@ class DepartmentController extends Controller
         }
 
         $customer  = Customer::where('unique_id', $id)->first();
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:customers,email,' . $customer->id,
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
 
         $customer->company_name     = $request->company_name;
         $customer->firstname        = $request->firstname;
@@ -265,13 +283,14 @@ class DepartmentController extends Controller
 
             Mail::to($request->email)->send(new EmailRegistration($registration));
 
-            if (!count(Mail::failures())) {
-                $survey              = new Survey;
-                $survey->unique_id   = $this->survey_id;
-                $survey->customer_id = $id;
-                $survey->status      = 1;
-                $survey->save();
+            if (count(Mail::failures())) {
+                return redirect()->back()->with('error', __('messages.went_wrong'));
             }
+            $survey              = new Survey;
+            $survey->unique_id   = $this->survey_id;
+            $survey->customer_id = $id;
+            $survey->status      = 1;
+            $survey->save();
         }
 
         return redirect()->back()->with('success', config('constant.customer') . __('messages.updated'));
@@ -281,11 +300,8 @@ class DepartmentController extends Controller
     {
         is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'views');
 
-        if (Auth::user()->id == 1) {
-            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get(['surveys.unique_id as survey_unique_id', 'customers.*', 'surveys.*']);
-        } else {
-            $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where(['customers.department' => $department, 'customers.added_by' => Auth::user()->id])->get(['surveys.unique_id as survey_unique_id', 'customers.*', 'surveys.*']);
-        }
+        $surveys = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('customers.department', $department)->get(['surveys.unique_id as survey_unique_id', 'customers.*', 'surveys.*']);
+        
         return view('admin.department.survey.index', [
             'page_title' => 'Survey',
             'department' => $department,
@@ -373,7 +389,7 @@ class DepartmentController extends Controller
 
     public function delete_survey($department, $survey_id)
     {
-        //is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'deletes');
+        is_permission_allowed(Auth::user()->is_admin, $this->module_name_survey, 'deletes');
         $survey = Survey::where('unique_id', $survey_id)->first();
         $survey->delete();
 

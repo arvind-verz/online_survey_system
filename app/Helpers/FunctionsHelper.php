@@ -3,6 +3,7 @@
 use App\PermissionAccess;
 use App\Survey;
 use App\Admin;
+use App\Page;
 use Illuminate\Support\Facades\Redirect;
 
 if (!function_exists('get_survey_status')) {
@@ -25,9 +26,12 @@ if (!function_exists('get_survey_status')) {
 
     function get_slug_array()
     {
-        $slug_list = [
-            'web-design', 'web-programming', 'project-management', 'feedback', 'thank-you',
-        ];
+        $slug_list = [];
+        $slugs = Page::where('display', 1)->orderBy('ordering', 'asc')->get();
+        foreach($slugs as $slug)
+        {
+            $slug_list[] = $slug->slug;
+        }
 
         return $slug_list;
     }
@@ -57,5 +61,17 @@ if (!function_exists('get_survey_status')) {
         if(!$permission_access->count()) {
             abort(redirect('admin/access-not-allowed'));
         }
+    }
+
+    function get_admin_type($is_admin)
+    {
+        $admin_type_array = ['Super Admin', 'Deparment Admin', 'Staff'];
+        return $admin_type_array[($is_admin-1)];
+    }
+
+    function get_pagename_by_slug($slug)
+    {
+        $slug = Page::where('slug', $slug)->first();
+        return $slug->title;
     }
 }

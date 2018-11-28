@@ -30,9 +30,6 @@
                                         Display
                                     </th>
                                     <th>
-                                        Order
-                                    </th>
-                                    <th>
                                         Created At
                                     </th>
                                     <th>
@@ -52,9 +49,6 @@
                                     </td>
                                     <td>
                                         {{ ($page->display==1) ? 'Yes' : 'No' }}
-                                    </td>
-                                    <td>
-                                        {{ $page->ordering }}
                                     </td>
                                     <td>
                                         {{ $page->created_at }}

@@ -10,7 +10,9 @@
 </footer>
 <script type="text/javascript">
     $(document).ready(function() {
-    	$('#datatable').DataTable();
+    	$('#datatable').DataTable({
+            "ordering": false,
+        });
 
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',

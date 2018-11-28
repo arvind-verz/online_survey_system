@@ -67,6 +67,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/{department}/survey/delete-survey/{survey_id}', 'AdminAuth\DepartmentController@delete_survey');
 });
 
-
+Route::get('verification/{verz_id}', 'AdminAuth\Account\ProfileController@verification');
 Route::get('/{survey_id}/{slug}', 'Auth\CMSController@index');
 Route::post('/{survey_id}/{slug}/store', 'Auth\CMSController@store');

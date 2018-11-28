@@ -4,12 +4,22 @@
 	<div class="container">
 		<div class="inner-container">
 			<div class="bottom-steps fleft">
-				<div class="step st1 @if($page->slug=='web-design') st-selected @endif @if(Session::get('mydata.web-design') || $page->slug=='thank-you') st-complete @endif"><span>Web Design</span></div>
-				<div class="step st2 @if($page->slug=='web-programming') st-selected @endif @if(Session::get('mydata.web-programming') || $page->slug=='thank-you') st-complete @endif"><span>Web<br>
+				@php $i = 1;$slugs = get_slug_array(); @endphp
+				@if($slugs)
+				@foreach($slugs as $slug)
+				<div class="step st{{ $i }} @if($page->slug==$slug) st-selected @endif @if(Session::get('mydata.' . $slug) || $page->slug=='thank-you') st-complete @endif">
+					<span>
+						{{ get_pagename_by_slug($slug) }}	
+					</span>
+				</div>
+				@php $i++; @endphp
+				@endforeach
+				@endif
+				<!-- <div class="step st2 @if($page->slug=='web-programming') st-selected @endif @if(Session::get('mydata.web-programming') || $page->slug=='thank-you') st-complete @endif"><span>Web<br>
 				Programming</span></div>
 				<div class="step st3 @if($page->slug=='project-management') st-selected @endif @if(Session::get('mydata.project-management') || $page->slug=='thank-you') st-complete @endif"><span>Project<br>
 				Management</span></div>
-				<div class="step st4 @if($page->slug=='feedback') st-selected @endif @if(Session::get('mydata.feedback') || $page->slug=='thank-you') st-complete @endif"><span>Feedback</span></div>
+				<div class="step st4 @if($page->slug=='feedback') st-selected @endif @if(Session::get('mydata.feedback') || $page->slug=='thank-you') st-complete @endif"><span>Feedback</span></div> -->
 			</div>
 			<div class="bottom-logo fright"><img src="{{ asset('images/verz-logo.png') }}" alt="Verz Design" /></div>
 			<div class="clear"></div>

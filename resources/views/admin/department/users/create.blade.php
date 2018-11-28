@@ -47,6 +47,7 @@
                             <input class="form-control" name="confirm_password" placeholder="Confirm password" type="password">
                             </input>
                         </div>
+                        @if(Auth::user()->is_admin==1)
                         <div class="form-group">
                             <label>
                                 Is Admin?
@@ -54,6 +55,7 @@
                             <input class="flat-green" name="is_admin" type="checkbox" value="1" @if(old('is_admin')==1) checked @endif>
                             </input>
                         </div>
+                        @endif
                         <div class="form-group">
                             <label>
                                 Active

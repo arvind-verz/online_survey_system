@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\AdminAuth\Account;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Admin;
+use App\Http\Controllers\Controller;
 use Auth;
-use Validator;
 use Hash;
+use Illuminate\Http\Request;
+use Validator;
 
 class ProfileController extends Controller
 {
@@ -23,7 +23,7 @@ class ProfileController extends Controller
     public function index()
     {
         return view('admin.account.profile', [
-            'page_title'    =>  'Profile'
+            'page_title' => 'Profile',
         ]);
     }
 
@@ -51,16 +51,16 @@ class ProfileController extends Controller
     public function update_user_details(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'             => 'required|max:255',
-            'email'            => 'required|email|unique:users,email,' . Auth::user()->id
+            'name'  => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $admin = Admin::find(Auth::user()->id);
-        $admin->name = $request->name;
+        $admin        = Admin::find(Auth::user()->id);
+        $admin->name  = $request->name;
         $admin->email = $request->email;
         $admin->save();
 
@@ -70,7 +70,7 @@ class ProfileController extends Controller
     public function update_user_password(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'old_password'  =>  'required',
+            'old_password'     => 'required',
             'password'         => 'min:6',
             'confirm_password' => 'required_with:password|same:password',
         ]);
@@ -133,5 +133,24 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function verification($verz_id)
+    {
+        $user              = Admin::where('unique_id', $verz_id)->first();
+        if($user->is_verified==1)
+        {
+            return abort(404);
+        }
+        $user->is_verified = 1;
+        $user->save();
+        if($user)
+        {
+            return view('admin.extra.thank-you', [
+                'page_title' =>  'Thank You',
+                'login_url' =>  url('admin/login'),
+            ]);    
+        }
+
     }
 }
