@@ -20,7 +20,7 @@ class CreateSurveysTable extends Migration
             $table->text('survey')->nullable();
             $table->boolean('status')->nullable();
             $table->timestamp('submitted_at')->nullable();
-            $table->boolean('survey_read')->default(0);
+            $table->text('additional_comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Page;
 use App\Survey;
+use App\Notification;
+use App\Admin;
 use Illuminate\Http\Request;
 
 class CMSController extends Controller
@@ -66,9 +68,19 @@ class CMSController extends Controller
         $slug_array_flip = array_flip($slug_array);
         $survey->survey = json_encode($request->session()->get('mydata'));
         if ($slug == $slug_array[array_last($slug_array_flip) - 1]) {
+            $users = Admin::all();
+            foreach($users as $user)
+            {
+                $notification = new Notification;
+                $notification->user_id = $user->unique_id;
+                $notification->survey_id = $survey->unique_id;
+                $notification->save();
+            }
+            
             $survey->status     = 2;
             $survey->updated_at = $survey->submitted_at = date('Y-m-d H:i:s');
             $request->session()->flush();
+
         }
         $survey->save();
         return redirect($survey_id . '/' . $slug_array[($slug_array_flip[$slug] + 1)]);

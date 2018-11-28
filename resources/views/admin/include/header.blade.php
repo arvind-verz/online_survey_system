@@ -21,66 +21,43 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Notifications: style can be found in dropdown.less -->
-                <!-- <li class="dropdown notifications-menu">
+                <li class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell-o">
                         </i>
                         <span class="label label-warning">
-                            10
+                            {{ get_survey_notification_count(Auth::user()->unique_id) }}
                         </span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">
-                            You have 10 notifications
+                            You have {{ get_survey_notification_count(Auth::user()->unique_id) }} notifications
                         </li>
                         <li>
-                            inner menu: contains the actual data
                             <ul class="menu">
+                                @php
+                                $notifications = get_survey_notification_list(Auth::user()->unique_id);
+                                @endphp
+                                @if($notifications)
+                                @foreach($notifications as $notification)
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-aqua">
+                                    <a href="#" class="read_notification">
+                                        <i class="fa fa-flag text-aqua">
                                         </i>
-                                        5 new members joined today
+                                        {{ get_survey_notification_by_survey_id($notification->survey_id) }}
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-yellow">
-                                        </i>
-                                        Very long description here that may not fit into the
-                      page and may cause design problems
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-red">
-                                        </i>
-                                        5 new members joined
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-shopping-cart text-green">
-                                        </i>
-                                        25 sales made
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-red">
-                                        </i>
-                                        You changed your username
-                                    </a>
-                                </li>
+                                @endforeach
+                                @endif
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">
+                            <a href="{{ url('admin/all-notifications') }}">
                                 View all
                             </a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
