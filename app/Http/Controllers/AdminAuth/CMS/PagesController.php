@@ -25,7 +25,7 @@ class PagesController extends Controller
     {
         is_permission_allowed(Auth::user()->is_admin, $this->module_name, 'views');
 
-        $pages = Page::all();
+        $pages = Page::orderBy('ordering', 'asc')->get();
 
         return view('admin.cms.pages.index', [
             'page_title' => 'Pages',

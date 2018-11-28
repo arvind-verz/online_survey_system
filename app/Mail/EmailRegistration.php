@@ -30,7 +30,7 @@ class EmailRegistration extends Mailable
     public function build()
     {
         //dd($this->registration);
-        return $this->view('admin.email_templates.email_registration', [
+        return $this->subject('Verz Survey')->view('admin.email_templates.email_registration', [
             'url'           => $this->registration['url'],
             'receiver_name' => $this->registration['receiver_name'],
             'sender_email'  => $this->registration['sender_email'],

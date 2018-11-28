@@ -298,6 +298,12 @@ opacity: 1;
 .st2::before{ content:"02";}
 .st3::before{ content:"03";}
 .st4::before{ content:"04";}
+.st5::before{ content:"05";}
+.st6::before{ content:"06";}
+.st7::before{ content:"07";}
+.st8::before{ content:"08";}
+.st9::before{ content:"09";}
+.st10::before{ content:"010";}
 .st-complete{ font-weight:600; color:#231f20;}
 .st-selected{ font-weight:600; color:#f37936;}
 .st-complete::before{content:""!important; width:34px; height:35px; background:url(../images/icon2.png) no-repeat; top:0;}
