@@ -15,10 +15,8 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('unique_id')->default('verz_' . uniqid());
-            $table->integer('_for_id');
-            $table->string('_type')->nullable();
-            $table->string('_for')->nullable();
+            $table->string('user_id');
+            $table->string('survey_id');
             $table->boolean('_read')->default(0);
             $table->timestamps();
             $table->softDeletes();

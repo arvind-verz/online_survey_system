@@ -54,3 +54,8 @@ Breadcrumbs::for('view_department', function ($trail, $department, $type) {
 	$trail->push(ucfirst($type) . 's', url('admin/' . $department . '/'. $type));
     $trail->push('View', url('/admin/' . $department . '/' . $type . '/view'));
 });
+
+Breadcrumbs::for('notifications', function ($trail) {
+	$trail->parent('dashboard');
+    $trail->push('Notifications', url('/admin/all-notifications'));
+});

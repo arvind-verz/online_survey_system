@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminAuth\Account;
 
 use App\Admin;
+use App\Notification;
 use App\Http\Controllers\Controller;
 use Auth;
 use Hash;
@@ -137,20 +138,29 @@ class ProfileController extends Controller
 
     public function verification($verz_id)
     {
-        $user              = Admin::where('unique_id', $verz_id)->first();
-        if($user->is_verified==1)
-        {
+        $user = Admin::where('unique_id', $verz_id)->first();
+        if ($user->is_verified == 1) {
             return abort(404);
         }
         $user->is_verified = 1;
         $user->save();
-        if($user)
-        {
+        if ($user) {
             return view('admin.extra.thank-you', [
-                'page_title' =>  'Thank You',
-                'login_url' =>  url('admin/login'),
-            ]);    
+                'page_title' => 'Thank You',
+                'login_url'  => url('admin/login'),
+            ]);
         }
 
+    }
+
+    public function notifications()
+    {
+        Notification::where(['user_id'  => Auth::user()->unique_id, '_read'   =>  0])->update(['_read'   => 1]);
+
+        $notifications = get_survey_notification_list(Auth::user()->unique_id, 'read_all');
+        return view('admin.extra.notifications', [
+            'page_title'    => 'All Notifications',
+            'notifications' => $notifications,
+        ]);
     }
 }

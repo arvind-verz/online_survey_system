@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
 
     /* PROFILE */
+    Route::get('/all-notifications', 'AdminAuth\Account\ProfileController@notifications');
     Route::get('/profile', 'AdminAuth\Account\ProfileController@index')->name('profile');
     Route::post('/profile/update-user-details', 'AdminAuth\Account\ProfileController@update_user_details');
     Route::post('/profile/update-user-password', 'AdminAuth\Account\ProfileController@update_user_password');

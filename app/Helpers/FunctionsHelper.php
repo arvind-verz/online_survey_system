@@ -4,6 +4,7 @@ use App\PermissionAccess;
 use App\Survey;
 use App\Admin;
 use App\Page;
+use App\Notification;
 use Illuminate\Support\Facades\Redirect;
 
 if (!function_exists('get_survey_status')) {
@@ -73,5 +74,34 @@ if (!function_exists('get_survey_status')) {
     {
         $slug = Page::where('slug', $slug)->first();
         return $slug->title;
+    }
+
+    function get_survey_notification_count($user_id)
+    {
+        $notification_count = Notification::where(['user_id'   =>  $user_id, '_read'  => 0])->count();
+        return $notification_count;
+    }
+
+    function get_survey_notification_list($user_id, $read_type = false)
+    {
+        if($read_type) {
+            $notifications = Notification::where(['user_id'   =>  $user_id])->orderBy('id', 'desc')->get();
+        }
+        else {
+            $notifications = Notification::where(['user_id'   =>  $user_id, '_read'  => 0])->orderBy('id', 'desc')->get();
+        }
+        return $notifications;
+    }
+
+    function get_survey_notification_by_survey_id($survey_id)
+    {
+        $survey = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('surveys.unique_id', $survey_id)->first();
+        return $survey->company_name . ' has reviewed survey on ' . date('d, M Y H:i A', strtotime($survey->submitted_at));
+    }
+
+    function get_survey_link_by_department($survey_id)
+    {
+        $survey = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('surveys.unique_id', $survey_id)->first();
+        return url('/admin/' . $survey->department . '/survey/view/' . $survey_id);
     }
 }
