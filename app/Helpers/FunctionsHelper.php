@@ -5,6 +5,7 @@ use App\Survey;
 use App\Admin;
 use App\Page;
 use App\Notification;
+use App\Customer;
 use Illuminate\Support\Facades\Redirect;
 
 if (!function_exists('get_survey_status')) {
@@ -103,5 +104,11 @@ if (!function_exists('get_survey_status')) {
     {
         $survey = Survey::join('customers', 'surveys.customer_id', '=', 'customers.unique_id')->where('surveys.unique_id', $survey_id)->first();
         return url('/admin/' . $survey->department . '/survey/view/' . $survey_id);
+    }
+
+    function get_sales_person($customer_id)
+    {
+        $user = Customer::join('admins', 'customers.added_by', '=', 'admins.id')->where('customers.unique_id', $customer_id)->first();
+        return $user->name;
     }
 }
