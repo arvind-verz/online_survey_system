@@ -55,7 +55,7 @@
                                         {{ isset($survey->submitted_at) ? $survey->submitted_at : '-' }}
                                     </td>
                                     <td>
-                                        Tiger Xenon
+                                        {{ get_sales_person($survey->customer_id) }}
                                     </td>
                                     <td>
                                         {{ isset($survey->company_name) ? $survey->company_name : '-' }}
@@ -91,12 +91,14 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-@endsection
 <script type="text/javascript">
-    function delete_survey(department, survey_id, ref) {
-        var r = confirm("Are you sure to delete?");
-        if(r==true) {
-            window.location.href = '{{ url('/') }}/admin/' + department + '/survey/delete-survey/' + survey_id;
+    $(document).ready(function() {
+        function delete_survey(department, survey_id, ref) {
+            var r = confirm("Are you sure to delete?");
+            if(r==true) {
+                window.location.href = '{{ url('/') }}/admin/' + department + '/survey/delete-survey/' + survey_id;
+            }
         }
-    }
+    });
 </script>
+@endsection

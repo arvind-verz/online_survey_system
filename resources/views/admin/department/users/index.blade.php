@@ -68,8 +68,8 @@
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
                                 @php $i++; @endphp
+                                @endforeach
                                 @endif
                             </tbody>
                         </table>
