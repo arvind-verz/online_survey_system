@@ -51,7 +51,25 @@
                                 </tbody>
                             </table>
                             @else
-                            {{ print_r($survey_answer) }}
+                            <table class="table table-bordered">
+                                <tbody>
+                                    @foreach($survey_answer as $key   =>  $value)
+                                    <tr>
+                                        <td>
+                                            {!! '<strong>' . ucwords($key) . ':</strong> ' . $value->comment !!}
+                                            @if(is_numeric($value->score))
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ ($value->score*10) }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ ($value->score*10) }}%">
+                                                    {{ $key . ' - ' . ($value->score) . '/10' }}
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </td>
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             @endif
                         </div>
                         <div class="form-group">
