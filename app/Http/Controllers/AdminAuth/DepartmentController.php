@@ -5,7 +5,7 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Admin;
 use App\Customer;
 use App\Http\Controllers\Controller;
-use App\Mail\EmailRegistration;
+use App\Mail\EmailProjectRegistration;
 use App\Mail\EmailUserRegistration;
 use App\Survey;
 use Auth;
@@ -223,8 +223,8 @@ class DepartmentController extends Controller
                 'url'           => url($this->survey_id . '/' . 'web-design'),
                 'receiver_name' => $request->firstname . ' ' . $request->lastname,
             ];
-
-            Mail::to($request->email)->send(new EmailRegistration($registration));
+            
+            Mail::to($request->email)->send(new EmailProjectRegistration($registration));
 
             if (count(Mail::failures())) {
                 return redirect()->back()->with('error', __('messages.went_wrong'));
@@ -281,7 +281,7 @@ class DepartmentController extends Controller
                 'receiver_name' => $request->firstname . ' ' . $request->lastname,
             ];
 
-            Mail::to($request->email)->send(new EmailRegistration($registration));
+            Mail::to($request->email)->send(new EmailProjectRegistration($registration));
 
             if (count(Mail::failures())) {
                 return redirect()->back()->with('error', __('messages.went_wrong'));
